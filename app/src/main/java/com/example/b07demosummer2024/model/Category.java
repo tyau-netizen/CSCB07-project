@@ -1,5 +1,7 @@
 package com.example.b07demosummer2024.model;
 
+import androidx.annotation.NonNull;
+
 /**
  * Fixed set of artifact categories.
  **/
@@ -31,6 +33,7 @@ public enum Category {
         return displayName;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return displayName;

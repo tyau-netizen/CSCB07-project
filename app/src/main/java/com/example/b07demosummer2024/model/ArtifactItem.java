@@ -1,7 +1,5 @@
 package com.example.b07demosummer2024.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import java.util.Locale;
 
 /**
@@ -31,6 +29,8 @@ public class ArtifactItem {
     private String accessionNumber;
     private String notes;
     private String imageUri;
+    private int imageInt;
+
 
     // Whether the current user has saved/bookmarked this artifact.
     private boolean saved;
@@ -170,6 +170,10 @@ public class ArtifactItem {
     public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
     }
+    public int getImageInt() { return imageInt; }
+    public void setImageInt(int imageInt) {
+        this.imageInt = imageInt;
+    }
 
     public boolean isSaved() {
         return saved;
@@ -179,14 +183,6 @@ public class ArtifactItem {
         this.saved = saved;
     }
 
-    /**
-     * Keyword search helper, e.g.:
-
-     *   List<Artifact> results = new ArrayList<>();
-     *   for (Artifact a : allArtifacts) {
-     *       if (a.matchesKeyword(query)) results.add(a);
-     *   }
-     */
     public boolean matchesKeyword(String keyword) {
         if (keyword == null || keyword.trim().isEmpty()) {
             return true; // empty search
