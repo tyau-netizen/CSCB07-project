@@ -62,6 +62,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         TextView registerText = view.findViewById(R.id.textViewRegister);
+        // Navigate to register screen when the "Don't have an account?" text is clicked
         registerText.setOnClickListener(v -> {
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragmentContainerView, new RegisterFragment());
