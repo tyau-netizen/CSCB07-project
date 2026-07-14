@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.b07demosummer2024"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.b07demosummer2024"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -23,6 +23,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+    buildFeatures {
+        viewBinding = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -30,9 +33,11 @@ android {
 }
 
 dependencies {
-
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation(libs.activity.ktx)
     implementation(libs.appcompat)
     implementation(libs.cardview)
+    implementation(libs.fragment)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
