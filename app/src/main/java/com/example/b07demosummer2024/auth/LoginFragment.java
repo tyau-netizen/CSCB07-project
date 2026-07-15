@@ -17,9 +17,10 @@ import com.example.b07demosummer2024.databinding.FragmentLoginBinding;
  * A simple {@link Fragment} subclass.
  * Handles user login input and validation
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements LoginContract.View {
 
     private FragmentLoginBinding binding;
+    private LoginContract.Presenter presenter;
 
     public LoginFragment() {}
 
@@ -40,30 +41,43 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Initialize the presenter
+        presenter = new LoginPresenter(this);
+
         // Click listeners
         binding.loginButton.setOnClickListener(v -> {
-            // Get username and password from their text fields
-            String username = binding.loginEmailInput.getText().toString().trim();
+            // Get email and password from their text fields
+            String email = binding.loginEmailInput.getText().toString().trim();
             String password = binding.loginPasswordInput.getText().toString();
 
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(getContext(), "Please fill in all the fields",
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "Login stuff will happen",
-                        Toast.LENGTH_SHORT).show();
-            }
+            presenter.handleLogin(email, password);
         });
 
         binding.registerLink.setOnClickListener(v -> {
-            // Create RegisterFragment
-            RegisterFragment registerFragment = new RegisterFragment();
-
-            getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, registerFragment)
-                    .addToBackStack(null)
-                    .commit();
+            presenter.handleRegisterClick();
         });
+    }
+
+    @Override
+    public void displayToastMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void navigateToRegister() {
+        // Create RegisterFragment
+        RegisterFragment registerFragment = new RegisterFragment();
+
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, registerFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void navigateToHome() {
+        // TODO: Actually navigate to the homepage
+        displayToastMessage("navigating to home...");
     }
 
     @Override
@@ -71,5 +85,9 @@ public class LoginFragment extends Fragment {
         super.onDestroyView();
         // Clean up binding to prevent memory leaks
         binding = null;
+        if (presenter != null) {
+            presenter.onDestroy();
+            presenter = null;
+        }
     }
 }
