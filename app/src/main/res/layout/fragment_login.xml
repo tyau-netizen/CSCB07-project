@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/titleText"
+                android:id="@+id/login_title_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -30,15 +30,15 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
             <EditText
-                android:id="@+id/editTextTextEmailAddress"
+                android:id="@+id/login_email_input"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:ems="10"
-                android:hint="Username"
+                android:hint="Email"
                 android:inputType="textEmailAddress" />
 
             <EditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/login_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:ems="10"
@@ -46,14 +46,14 @@
                 android:inputType="textPassword" />
 
             <Button
-                android:id="@+id/loginButton"
+                android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:text="Login" />
 
             <TextView
-                android:id="@+id/textViewRegister"
+                android:id="@+id/register_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Don't have an account? Register"

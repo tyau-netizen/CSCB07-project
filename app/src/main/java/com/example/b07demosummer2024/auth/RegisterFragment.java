@@ -32,8 +32,8 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         // Get references to UI elements
-        EditText emailField = view.findViewById(R.id.editTextTextEmailAddress);
-        EditText passwordField = view.findViewById(R.id.editTextTextPassword);
+        EditText emailField = view.findViewById(R.id.login_email_input);
+        EditText passwordField = view.findViewById(R.id.login_password_input);
         Button registerButton = view.findViewById(R.id.registerButton);
         TextView loginText = view.findViewById(R.id.textViewLogin);
 
@@ -60,7 +60,7 @@ public class RegisterFragment extends Fragment {
         // Navigate back to login screen when "Already have an account?" is clicked
         loginText.setOnClickListener(v -> {
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragmentContainerView, new LoginFragment());
+            transaction.replace(R.id.fragment_container, new LoginFragment());
             transaction.commit();
         });
         return view;
