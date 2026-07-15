@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.b07demosummer2024.model.ArtifactItem;
 import com.example.b07demosummer2024.model.ArtifactItemAdapter;
 import com.example.b07demosummer2024.model.DummyData;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +39,26 @@ public class RecyclerViewStaticFragment extends Fragment {
 
         itemAdapter = new ArtifactItemAdapter(itemList);
         recyclerView.setAdapter(itemAdapter);
-
         return view;
+    }
+
+    private void seedDatabase() {
+        // called only once to set up database by our dummy data
+        FirebaseDatabase db = FirebaseDatabase.getInstance("https://taam-100-default-rtdb.firebaseio.com/");
+        DatabaseReference artifactsRef = db.getReference("artifacts");
+
+        List<ArtifactItem> dummyItems = new ArrayList<>();
+        dummyItems.add(DummyData.createArtifact1());
+        dummyItems.add(DummyData.createArtifact2());
+        dummyItems.add(DummyData.createArtifact3());
+        dummyItems.add(DummyData.createArtifact4());
+        dummyItems.add(DummyData.createArtifact5());
+
+        for (ArtifactItem item : dummyItems) {
+            artifactsRef.push().setValue(item);
+        }
+
+        Log.d("dummy data", "seedDatabase: done");
     }
 
     private void loadStaticItems() {

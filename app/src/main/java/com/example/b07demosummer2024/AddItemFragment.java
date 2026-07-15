@@ -36,7 +36,7 @@ public class AddItemFragment extends Fragment {
         spinnerCategory = view.findViewById(R.id.spinnerCategory);
         buttonAdd = view.findViewById(R.id.buttonAdd);
 
-        db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
+        db = FirebaseDatabase.getInstance("https://console.firebase.google.com/project/taam-100/database/taam-100-default-rtdb/data/~2F");
 
         // Set up the spinner with categories
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -68,14 +68,14 @@ public class AddItemFragment extends Fragment {
 
         itemsRef = db.getReference("categories/" + category);
         String id = itemsRef.push().getKey();
-        Item item = new Item(id, title, author, genre, description);
+//        Item item = new Item(id, title, author, genre, description);
 
-        itemsRef.child(id).setValue(item).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(getContext(), "Item added", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "Failed to add item", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        itemsRef.child(id).setValue(item).addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                Toast.makeText(getContext(), "Item added", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(getContext(), "Failed to add item", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 }

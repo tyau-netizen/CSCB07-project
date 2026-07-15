@@ -4,7 +4,6 @@ package com.example.b07demosummer2024.model;
 //import static androidx.core.content.ContentProviderCompat.requireContext;
 
 //import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.b07demosummer2024.Item;
 import com.example.b07demosummer2024.R;
 
 import java.util.List;

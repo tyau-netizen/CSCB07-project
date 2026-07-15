@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.b07demosummer2024.model.ArtifactItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +37,7 @@ public class DeleteItemFragment extends Fragment {
         spinnerCategory = view.findViewById(R.id.spinnerCategory);
         buttonDelete = view.findViewById(R.id.buttonDelete);
 
-        db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
+        db = FirebaseDatabase.getInstance("https://console.firebase.google.com/project/taam-100/database/taam-100-default-rtdb/data/~2F");
 
         // Set up the spinner with categories
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -67,24 +68,24 @@ public class DeleteItemFragment extends Fragment {
         itemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                boolean itemFound = false;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Item item = snapshot.getValue(Item.class);
-                    if (item != null && item.getTitle().equalsIgnoreCase(title)) {
-                        snapshot.getRef().removeValue().addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getContext(), "Item deleted", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getContext(), "Failed to delete item", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        itemFound = true;
-                        break;
-                    }
-                }
-                if (!itemFound) {
-                    Toast.makeText(getContext(), "Item not found", Toast.LENGTH_SHORT).show();
-                }
+//                boolean itemFound = false;
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    ArtifactItem item = snapshot.getValue(ArtifactItem.class);
+//                    if (item != null && item.getTitle().equalsIgnoreCase(title)) {
+//                        snapshot.getRef().removeValue().addOnCompleteListener(task -> {
+//                            if (task.isSuccessful()) {
+//                                Toast.makeText(getContext(), "Item deleted", Toast.LENGTH_SHORT).show();
+//                            } else {
+//                                Toast.makeText(getContext(), "Failed to delete item", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                        itemFound = true;
+//                        break;
+//                    }
+//                }
+//                if (!itemFound) {
+//                    Toast.makeText(getContext(), "Item not found", Toast.LENGTH_SHORT).show();
+//                }
             }
 
             @Override
