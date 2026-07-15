@@ -42,13 +42,22 @@ public class RecyclerViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
-
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         spinnerCategory = view.findViewById(R.id.spinnerCategory);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.categories_array, android.R.layout.simple_spinner_item);
+
+        Category[] categories = Category.values();
+
+        // Build display list: "All Artifacts" first, then every category
+        List<String> displayNames = new ArrayList<>();
+        displayNames.add(ALL_ARTIFACTS_LABEL);
+        for (Category c : categories) {
+            displayNames.add(c.getDisplayName());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, displayNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
 
@@ -61,8 +70,14 @@ public class RecyclerViewFragment extends Fragment {
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String category = parent.getItemAtPosition(position).toString().toLowerCase();
-                fetchItemsFromDatabase(category);
+                if (position == 0) {
+                    // "All Artifacts" selected
+                    fetchAllItemsFromDatabase();
+                } else {
+                    // position 1 maps to categories[0], position 2 to categories[1], etc.
+                    Category selectedCategory = categories[position - 1];
+                    fetchItemsFromDatabase(selectedCategory);
+                }
             }
 
             @Override
