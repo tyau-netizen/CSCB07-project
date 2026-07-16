@@ -34,6 +34,8 @@ android {
 
 dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("androidx.navigation:navigation-fragment:2.9.8")
+    implementation("androidx.navigation:navigation-ui:2.9.8")
     implementation(libs.activity.ktx)
     implementation(libs.appcompat)
     implementation(libs.cardview)
