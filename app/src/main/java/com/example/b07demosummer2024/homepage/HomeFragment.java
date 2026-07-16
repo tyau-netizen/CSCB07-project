@@ -20,7 +20,7 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         Button buttonRecyclerView = view.findViewById(R.id.buttonRecyclerView);
         Button buttonScroller = view.findViewById(R.id.buttonScroller);
