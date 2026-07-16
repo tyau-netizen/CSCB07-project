@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import android.view.ViewGroup;
@@ -59,9 +61,8 @@ public class RegisterFragment extends Fragment {
         });
         // Navigate back to login screen when "Already have an account?" is clicked
         loginText.setOnClickListener(v -> {
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, new LoginFragment());
-            transaction.commit();
+            Navigation.findNavController(requireView()).navigate(
+                    R.id.action_registerFragment_to_loginFragment);
         });
         return view;
     }

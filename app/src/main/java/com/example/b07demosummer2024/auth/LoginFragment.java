@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.example.b07demosummer2024.R;
 import com.example.b07demosummer2024.databinding.FragmentLoginBinding;
@@ -65,13 +66,8 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 
     @Override
     public void navigateToRegister() {
-        // Create RegisterFragment
-        RegisterFragment registerFragment = new RegisterFragment();
-
-        getParentFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, registerFragment)
-                .addToBackStack(null)
-                .commit();
+        Navigation.findNavController(requireView()).navigate(
+                R.id.action_loginFragment_to_registerFragment);
     }
 
     @Override
