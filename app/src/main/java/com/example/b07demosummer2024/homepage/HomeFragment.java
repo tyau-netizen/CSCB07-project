@@ -1,4 +1,4 @@
-package com.example.b07demosummer2024;
+package com.example.b07demosummer2024.homepage;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.b07demosummer2024.R;
+import com.example.b07demosummer2024.RecyclerViewFragment;
+import com.example.b07demosummer2024.misc.ManageItemsFragment;
+import com.example.b07demosummer2024.misc.ScrollerFragment;
+import com.example.b07demosummer2024.misc.SpinnerFragment;
 
 public class HomeFragment extends Fragment {
     @Nullable
