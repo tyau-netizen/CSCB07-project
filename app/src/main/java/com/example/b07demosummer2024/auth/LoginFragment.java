@@ -28,6 +28,9 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Initialize the presenter
+        presenter = new LoginPresenter();
     }
 
     @Override
@@ -35,15 +38,14 @@ public class LoginFragment extends Fragment implements LoginContract.View {
                              Bundle savedInstanceState) {
         // Inflate fragment layout using ViewBinding
         binding = FragmentLoginBinding.inflate(inflater, container, false);
+        // Attach presenter
+        presenter.attachView(this);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Initialize the presenter
-        presenter = new LoginPresenter(this);
 
         // Click listeners
         binding.loginButton.setOnClickListener(v -> {
@@ -72,8 +74,8 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 
     @Override
     public void navigateToHome() {
-        // TODO: Actually navigate to the homepage
-        displayToastMessage("navigating to home...");
+        Navigation.findNavController(requireView()).navigate(
+                R.id.action_loginFragment_to_homeFragment);
     }
 
     @Override
@@ -81,9 +83,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         super.onDestroyView();
         // Clean up binding to prevent memory leaks
         binding = null;
-        if (presenter != null) {
-            presenter.onDestroy();
-            presenter = null;
-        }
+        // Detach presenter to avoid it calling methods on a null binding
+        presenter.detachView();
     }
 }

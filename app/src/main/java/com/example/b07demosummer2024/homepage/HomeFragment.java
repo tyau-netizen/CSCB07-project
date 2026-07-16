@@ -4,62 +4,58 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import com.example.b07demosummer2024.R;
-import com.example.b07demosummer2024.RecyclerViewFragment;
-import com.example.b07demosummer2024.misc.ManageItemsFragment;
-import com.example.b07demosummer2024.misc.ScrollerFragment;
-import com.example.b07demosummer2024.misc.SpinnerFragment;
+import com.example.b07demosummer2024.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
-    @Nullable
+
+    private FragmentHomeBinding binding;
+
+
+    public HomeFragment() {}
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        Button buttonRecyclerView = view.findViewById(R.id.buttonRecyclerView);
-        Button buttonScroller = view.findViewById(R.id.buttonScroller);
-        Button buttonSpinner = view.findViewById(R.id.buttonSpinner);
-        Button buttonManageItems = view.findViewById(R.id.buttonManageItems);
-
-        buttonRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new RecyclerViewFragment());
-            }
-        });
-
-        buttonScroller.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new ScrollerFragment());
-            }
-        });
-
-        buttonSpinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new SpinnerFragment());
-            }
-        });
-
-        buttonManageItems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { loadFragment(new ManageItemsFragment());}
-        });
-
-        return view;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        // Inflate fragment layout using ViewBinding
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Click listeners
+        binding.buttonRecyclerView.setOnClickListener(v -> {
+            Navigation.findNavController(requireView()).navigate(
+                    R.id.action_homeFragment_to_recyclerViewFragment);
+        });
+
+        binding.buttonScroller.setOnClickListener(v -> {
+            Navigation.findNavController(requireView()).navigate(
+                    R.id.action_homeFragment_to_scrollerFragment);
+        });
+
+        binding.buttonSpinner.setOnClickListener(v -> {
+            Navigation.findNavController(requireView()).navigate(
+                    R.id.action_homeFragment_to_spinnerFragment);
+        });
+
+        binding.buttonManageItems.setOnClickListener(v -> {
+            Navigation.findNavController(requireView()).navigate(
+                    R.id.action_homeFragment_to_manageItemsFragment);
+        });
     }
 }
