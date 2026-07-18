@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.b07demosummer2024.R;
 
 import java.util.List;
@@ -34,9 +35,28 @@ public class ArtifactItemAdapter extends RecyclerView.Adapter<ArtifactItemAdapte
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         ArtifactItem item = itemList.get(position);
         holder.tvName.setText(item.getName());
-        holder.tvCategory.setText(item.getCategory().toString());
-        holder.tvDynastyPeriod.setText(item.getDynastyPeriod().toString());
-        holder.imageView.setImageResource(item.getImageInt());
+        if (item.getCategory() != null) {
+            holder.tvCategory.setText(item.getCategory().toString());
+        } else {
+            holder.tvCategory.setText("Unknown Category");
+        }
+
+        if (item.getDynastyPeriod() != null) {
+            holder.tvDynastyPeriod.setText(item.getDynastyPeriod().toString());
+        } else {
+            holder.tvDynastyPeriod.setText("Unknown Dynasty Period");
+        }
+
+        if (item.getImageUri() != null && !item.getImageUri().isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(item.getImageUri())
+                    .placeholder(R.drawable.placeholder_image)
+                    .into(holder.imageView);
+        } else {
+            // no image
+
+        }
+
     }
 
     @Override
