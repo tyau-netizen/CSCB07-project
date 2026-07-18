@@ -6,7 +6,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     private AuthRepository repository;
 
     public LoginPresenter() {
-        this.repository = new AuthRepository();
+        this.repository = AuthRepository.getInstance();
     }
 
     @Override

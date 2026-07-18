@@ -5,10 +5,18 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class AuthRepository {
 
+    private static AuthRepository instance;
     private final FirebaseAuth auth;
 
-    public AuthRepository() {
+    private AuthRepository() {
         this.auth = FirebaseAuth.getInstance();
+    }
+
+    public static synchronized AuthRepository getInstance() {
+        if (instance == null) {
+            instance = new AuthRepository();
+        }
+        return instance;
     }
 
     // Callback interface for presenter
@@ -22,6 +30,7 @@ public class AuthRepository {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && auth.getCurrentUser() != null) {
                         // Return successfully logged-in user email
+                        // TODO
                         callback.onSuccess(auth.getCurrentUser().getEmail());
                     } else {
                         // Return error message from Firebase
@@ -32,8 +41,15 @@ public class AuthRepository {
                 });
     }
 
-    public FirebaseUser getCurrentUser() {
-        return auth.getCurrentUser();
+    public boolean isLoggedIn() {
+        return auth.getCurrentUser() != null;
+    }
+
+    public String getUID() {
+        if (isLoggedIn()) {
+            return auth.getCurrentUser().getUid();
+        }
+        return null;
     }
 
     public void signOut() {
