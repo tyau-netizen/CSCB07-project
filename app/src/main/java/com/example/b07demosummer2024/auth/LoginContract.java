@@ -11,6 +11,8 @@ public interface LoginContract {
     interface Presenter {
         void handleLogin(String email, String password);
         void handleRegisterClick();
+        void attachView(LoginContract.View view);
+        void detachView();
         void onDestroy();
     }
 }

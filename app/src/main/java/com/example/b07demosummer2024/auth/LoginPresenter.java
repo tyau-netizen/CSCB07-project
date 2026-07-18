@@ -5,9 +5,8 @@ public class LoginPresenter implements LoginContract.Presenter {
     private LoginContract.View view;
     private AuthRepository repository;
 
-    public LoginPresenter(LoginContract.View view) {
-        this.view = view;
-        this.repository = new AuthRepository();
+    public LoginPresenter() {
+        this.repository = AuthRepository.getInstance();
     }
 
     @Override
@@ -42,6 +41,16 @@ public class LoginPresenter implements LoginContract.Presenter {
         if (view != null) {
             view.navigateToRegister();
         }
+    }
+
+    @Override
+    public void attachView(LoginContract.View view) {
+        this.view = view;
+    }
+
+    @Override
+    public void detachView() {
+        this.view = null;
     }
 
     @Override
