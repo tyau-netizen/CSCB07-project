@@ -9,15 +9,28 @@
     <string name="scroller">Scroller</string>
     <string name="spinner">Spinner</string>
     <string name="manage_items">Manage Items</string>
+    <string name="related_artifacts">RELATED ARTIFACTS</string>
+    <string name="related_artifacts2">RELATED ARTIFACTS</string>
 
-    <string-array name="categories_array">
-        <item>Books</item>
-        <item>Movies</item>
-    </string-array>
+    <string-array name="sort_options">
+        <item>Category</item>
+        <item>Material</item>
+        <item>DynastyPeriod</item>
+        <item>CulturalOrigin</item>
 
-    <string name="supabase_url">https://lqvaujbgprulsnjdoirw.supabase.co/rest/v1/</string>
+    </string-array><string name="supabase_url">https://lqvaujbgprulsnjdoirw.supabase.co/rest/v1/</string>
     <string name="supabase_anon_key">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxdmF1amJncHJ1bHNuamRvaXJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQxNzA5MzUsImV4cCI6MjA5OTc0NjkzNX0.P3-hTahWdRJ9lmD5p_98P5wopelwB0MnYRIhPSqO69U</string>
     <string name="supabase_image_bucket">artifact-images</string>
 
+    <string-array name="categories_array">
+        <item>Placeholder</item>
+        <item>Placeholder!</item>
+        <item>Placeholder2</item>
+        <item>Placeholder3</item>
+    </string-array>
+
+
 
 </resources>
+
+
