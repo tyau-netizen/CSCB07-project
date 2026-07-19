@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
@@ -23,5 +26,49 @@
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.b07demosummer2024.homepage.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_recyclerViewFragment"
+            app:destination="@id/recyclerViewFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_scrollerFragment"
+            app:destination="@id/scrollerFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_spinnerFragment"
+            app:destination="@id/spinnerFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_manageItemsFragment"
+            app:destination="@id/manageItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scrollerFragment"
+        android:name="com.example.b07demosummer2024.misc.ScrollerFragment"
+        android:label="fragment_scroller"
+        tools:layout="@layout/fragment_scroller" />
+    <fragment
+        android:id="@+id/spinnerFragment"
+        android:name="com.example.b07demosummer2024.misc.SpinnerFragment"
+        android:label="fragment_spinner"
+        tools:layout="@layout/fragment_spinner" />
+    <fragment
+        android:id="@+id/manageItemsFragment"
+        android:name="com.example.b07demosummer2024.misc.ManageItemsFragment"
+        android:label="fragment_manage_items"
+        tools:layout="@layout/fragment_manage_items" />
+    <fragment
+        android:id="@+id/recyclerViewFragment"
+        android:name="com.example.b07demosummer2024.RecyclerViewFragment"
+        android:label="fragment_recycler_view_static"
+        tools:layout="@layout/fragment_recycler_view_static" />
 </navigation>
