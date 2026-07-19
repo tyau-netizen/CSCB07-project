@@ -70,5 +70,15 @@
         android:id="@+id/recyclerViewFragment"
         android:name="com.example.b07demosummer2024.RecyclerViewFragment"
         android:label="fragment_recycler_view_static"
-        tools:layout="@layout/fragment_recycler_view_static" />
+        tools:layout="@layout/fragment_recycler_view_static" >
+        <action
+            android:id="@+id/action_recyclerViewFragment_to_expandedArtifactFragment"
+            app:destination="@id/expandedArtifactFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/expandedArtifactFragment"
+        android:name="com.example.b07demosummer2024.ExpandedArtifactFragment"
+        android:label="Artifact Details"
+        tools:layout="@layout/fragment_expanded_artifact" />
+
 </navigation>

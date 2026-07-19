@@ -7,6 +7,7 @@ package com.example.b07demosummer2024.model;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -19,9 +20,11 @@ import java.util.List;
 
 public class ArtifactItemAdapter extends RecyclerView.Adapter<ArtifactItemAdapter.ItemViewHolder> {
     private List<ArtifactItem> itemList;
+    private OnArtifactClickListener clickListener;
 
-    public ArtifactItemAdapter(List<ArtifactItem> itemList) {
+    public ArtifactItemAdapter(List<ArtifactItem> itemList, OnArtifactClickListener clickListener) {
         this.itemList = itemList;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -57,6 +60,14 @@ public class ArtifactItemAdapter extends RecyclerView.Adapter<ArtifactItemAdapte
 
         }
 
+
+        holder.expandedBtn.setOnClickListener(v -> {
+            if (clickListener != null) {
+                String artifactId = item.getLotNumber();
+                clickListener.onLearnMoreClick(artifactId);
+            }
+        });
+
     }
 
     @Override
@@ -67,6 +78,7 @@ public class ArtifactItemAdapter extends RecyclerView.Adapter<ArtifactItemAdapte
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView tvName, tvCategory, tvDynastyPeriod;
+        Button expandedBtn;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +86,13 @@ public class ArtifactItemAdapter extends RecyclerView.Adapter<ArtifactItemAdapte
             tvCategory = itemView.findViewById(R.id.category);
             tvDynastyPeriod = itemView.findViewById(R.id.dynastyPeriod);
             imageView = itemView.findViewById(R.id.imageView);
+            expandedBtn = itemView.findViewById(R.id.expandedBtn);
         }
     }
+
+
+    public static interface OnArtifactClickListener {
+        void onLearnMoreClick(String artifactIdentifier);
+    }
 }
+

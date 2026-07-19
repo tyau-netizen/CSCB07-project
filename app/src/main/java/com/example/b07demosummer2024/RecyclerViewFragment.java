@@ -11,6 +11,9 @@ import android.widget.AdapterView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,7 +65,13 @@ public class RecyclerViewFragment extends Fragment {
         spinnerCategory.setAdapter(adapter);
 
         itemList = new ArrayList<>();
-        itemAdapter = new ArtifactItemAdapter(itemList);
+        itemAdapter = new ArtifactItemAdapter(itemList, new ArtifactItemAdapter.OnArtifactClickListener() {
+            @Override
+            public void onLearnMoreClick(String artifactIdentifier) {
+                navigateToDetailFragment(artifactIdentifier);
+            }
+        });
+
         recyclerView.setAdapter(itemAdapter);
 
         db = FirebaseDatabase.getInstance("https://taam-100-default-rtdb.firebaseio.com/");
@@ -133,5 +142,14 @@ public class RecyclerViewFragment extends Fragment {
                 Log.e("RecyclerViewFragment", "Failed to read filtered items.", databaseError.toException());
             }
         });
+    }
+
+    private void navigateToDetailFragment(String artifactId) {
+        Bundle args = new Bundle();
+        args.putString("ARTIFACT_NO", artifactId);
+
+        NavController navController = NavHostFragment.findNavController(this);
+
+        navController.navigate(R.id.action_recyclerViewFragment_to_expandedArtifactFragment, args);
     }
 }

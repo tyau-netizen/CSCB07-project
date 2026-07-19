@@ -209,3 +209,4 @@ public class ArtifactItem {
         return field != null && field.toLowerCase(Locale.getDefault()).contains(query);
     }
 }
+
