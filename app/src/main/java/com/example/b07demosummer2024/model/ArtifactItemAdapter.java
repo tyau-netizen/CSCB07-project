@@ -94,5 +94,10 @@ public class ArtifactItemAdapter extends RecyclerView.Adapter<ArtifactItemAdapte
     public static interface OnArtifactClickListener {
         void onLearnMoreClick(String artifactIdentifier);
     }
+
+    public void updateList(List<ArtifactItem> newList) {
+        this.itemList = newList;
+        notifyDataSetChanged();
+    }
 }
 
