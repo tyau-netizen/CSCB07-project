@@ -1,13 +1,21 @@
 package com.example.b07demosummer2024.auth;
 
+import android.os.Bundle;
+
 import com.example.b07demosummer2024.base.BasePresenter;
+import com.example.b07demosummer2024.homepage.HomeFragment;
+import com.example.b07demosummer2024.user.SessionManager;
+import com.example.b07demosummer2024.user.User;
 
 public class LoginPresenter extends BasePresenter<LoginContract.View>
         implements LoginContract.Presenter {
-    private AuthRepository repository;
+
+    private final SessionManager sessionManager;
+    private final AuthRepository repository;
 
     public LoginPresenter() {
         this.repository = AuthRepository.getInstance();
+        this.sessionManager = SessionManager.getInstance();
     }
 
     public void handleLogin(String email, String password) {
@@ -18,13 +26,25 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
             return;
         }
 
+        // Attempt to sign in
         repository.signIn(email, password, new AuthRepository.AuthCallback() {
             @Override
             public void onSuccess(String email) {
-                if (view != null) {
-                    view.displayToastMessage("Logged in " + email);
-                    view.navigateToHome();
-                }
+                // Start a user session
+                sessionManager.startSession(new SessionManager.SessionCallback() {
+                    @Override
+                    public void onSuccess(User user) {
+                        if (view != null) {
+                            Bundle args = HomeFragment.packWelcomeBundle(false);
+                            view.navigateToHome(args);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        view.displayToastMessage("Failed to load user profile: " + e.getMessage());
+                    }
+                });
             }
 
             @Override

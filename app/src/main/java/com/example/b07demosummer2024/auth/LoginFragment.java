@@ -56,28 +56,14 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginContr
     }
 
     @Override
-    public void displayToastMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void navigateToRegister() {
         Navigation.findNavController(requireView()).navigate(
                 R.id.action_loginFragment_to_registerFragment);
     }
 
     @Override
-    public void navigateToHome() {
-        Navigation.findNavController(requireView()).navigate(
-                R.id.action_loginFragment_to_homeFragment);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        // Clean up binding to prevent memory leaks
-        binding = null;
-        // Detach presenter to avoid it calling methods on a null binding
-        presenter.detachView();
+    public void navigateToHome(Bundle args) {
+        Navigation.findNavController(requireView())
+                .navigate(R.id.action_loginFragment_to_homeFragment, args);
     }
 }

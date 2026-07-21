@@ -1,15 +1,17 @@
 package com.example.b07demosummer2024.homepage;
 
+import android.os.Bundle;
+
+import com.example.b07demosummer2024.base.BaseContract;
+
 public interface HomeContract {
 
-    interface View {
-        void displayToastMessage(String message);
-        // void navigateToLogin();
+    interface View extends BaseContract.View {
+        void navigateToLogin();
+        void showWelcomeMessage(String username);
     }
 
-    interface Presenter {
-        void attachView(HomeContract.View view);
-        void detachView();
-        void onDestroy();
+    interface Presenter extends BaseContract.Presenter<View> {
+        void handleInitialArguments(Bundle arguments);
     }
 }
