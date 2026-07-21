@@ -12,35 +12,29 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.b07demosummer2024.R;
+import com.example.b07demosummer2024.base.BaseFragment;
 import com.example.b07demosummer2024.databinding.FragmentLoginBinding;
 
 /**
  * A simple {@link Fragment} subclass.
  * Handles user login input and validation
  */
-public class LoginFragment extends Fragment implements LoginContract.View {
-
-    private FragmentLoginBinding binding;
-    private LoginContract.Presenter presenter;
+public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginContract.View,
+        LoginContract.Presenter> implements LoginContract.View {
 
     public LoginFragment() {}
 
+    @NonNull
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Initialize the presenter
-        presenter = new LoginPresenter();
+    protected FragmentLoginBinding inflateBinding(@NonNull LayoutInflater inflater,
+                                                  @Nullable ViewGroup container) {
+        return FragmentLoginBinding.inflate(inflater, container, false);
     }
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate fragment layout using ViewBinding
-        binding = FragmentLoginBinding.inflate(inflater, container, false);
-        // Attach presenter
-        presenter.attachView(this);
-        return binding.getRoot();
+    protected LoginPresenter createPresenter() {
+        return new LoginPresenter();
     }
 
     @Override

@@ -1,15 +1,15 @@
 package com.example.b07demosummer2024.auth;
 
-public class LoginPresenter implements LoginContract.Presenter {
+import com.example.b07demosummer2024.base.BasePresenter;
 
-    private LoginContract.View view;
+public class LoginPresenter extends BasePresenter<LoginContract.View>
+        implements LoginContract.Presenter {
     private AuthRepository repository;
 
     public LoginPresenter() {
         this.repository = AuthRepository.getInstance();
     }
 
-    @Override
     public void handleLogin(String email, String password) {
         if (view == null) return;
 
@@ -36,25 +36,9 @@ public class LoginPresenter implements LoginContract.Presenter {
         });
     }
 
-    @Override
     public void handleRegisterClick() {
         if (view != null) {
             view.navigateToRegister();
         }
-    }
-
-    @Override
-    public void attachView(LoginContract.View view) {
-        this.view = view;
-    }
-
-    @Override
-    public void detachView() {
-        this.view = null;
-    }
-
-    @Override
-    public void onDestroy() {
-        this.view = null;
     }
 }

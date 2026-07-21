@@ -1,7 +1,5 @@
 package com.example.b07demosummer2024.user;
 
-import android.provider.ContactsContract;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;

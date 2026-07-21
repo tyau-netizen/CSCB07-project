@@ -11,11 +11,10 @@ import androidx.navigation.Navigation;
 
 import com.example.b07demosummer2024.R;
 import com.example.b07demosummer2024.databinding.FragmentHomeBinding;
+import com.example.b07demosummer2024.user.SessionManager;
 
 public class HomeFragment extends Fragment {
-
     private FragmentHomeBinding binding;
-
 
     public HomeFragment() {}
 

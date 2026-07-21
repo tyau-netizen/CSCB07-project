@@ -1,10 +1,17 @@
 package com.example.b07demosummer2024.user;
 
+import com.example.b07demosummer2024.auth.AuthRepository;
+
 public final class SessionManager {
+    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
     private SessionListener listener;
     private User currentUser;
 
-    private SessionManager() {}
+    private SessionManager() {
+        this.userRepository = new UserRepository();
+        this.authRepository = AuthRepository.getInstance();
+    }
 
     private static class Holder {
         private static final SessionManager INSTANCE = new SessionManager();
@@ -14,8 +21,21 @@ public final class SessionManager {
         return Holder.INSTANCE;
     }
 
-    public void startSession(User user) {
-        this.currentUser = user;
+    public void startSession() {
+        String uid = authRepository.getUID();
+
+        userRepository.fetchUserProfile(uid, new UserRepository.UserFetchCallback() {
+            @Override
+            public void onSuccess(User user) {
+                currentUser = user;
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        });
+
     }
 
     public void endSession() {
