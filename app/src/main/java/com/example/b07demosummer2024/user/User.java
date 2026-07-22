@@ -6,20 +6,20 @@ import java.util.Map;
 public class User {
     private final String uid;
     private final String username;
-    private final Map<String, String> savedArtifacts;
+    private final SavedArtifactsManager savedArtifacts;
 
     // Constructor for creating new user
     public User(String uid, String username) {
         this.uid = uid;
         this.username = username;
-        this.savedArtifacts = new LinkedHashMap<>();
+        this.savedArtifacts = new SavedArtifactsManager();
     }
 
     // Constructor for fetching full user data
     public User(String uid, String username, Map<String, String> savedArtifacts) {
         this.uid = uid;
         this.username = username;
-        this.savedArtifacts = savedArtifacts;
+        this.savedArtifacts = new SavedArtifactsManager(savedArtifacts);
     }
 
     public String getUid() {
@@ -30,9 +30,7 @@ public class User {
         return this.username;
     }
 
-    public Map<String, String> getSavedArtifacts() {
-        return this.savedArtifacts;
+    public SavedArtifactsManager getSavedArtifactsManager() {
+        return savedArtifacts;
     }
-
-
 }

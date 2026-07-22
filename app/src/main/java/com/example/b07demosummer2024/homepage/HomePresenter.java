@@ -2,10 +2,8 @@ package com.example.b07demosummer2024.homepage;
 
 import android.os.Bundle;
 
-import com.example.b07demosummer2024.auth.LoginContract;
 import com.example.b07demosummer2024.base.BasePresenter;
 import com.example.b07demosummer2024.user.SessionManager;
-import com.example.b07demosummer2024.user.User;
 
 public class HomePresenter extends BasePresenter<HomeContract.View>
         implements HomeContract.Presenter {
@@ -32,6 +30,9 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
             username = "Guest";
         } else {
             username = sessionManager.getCurrentUser().getUsername();
+            if (username == null) {
+                username = "noUsername";
+            }
         }
         view.showWelcomeMessage(username);
     }

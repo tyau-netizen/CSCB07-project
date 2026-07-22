@@ -36,7 +36,7 @@ public class UserRepository {
         });
     }
 
-    public void saveUserProfile(User user, UserSaveCallback callback) {
+    public void saveNewUserProfile(User user, UserSaveCallback callback) {
         databaseReference.child(user.getUid()).setValue(user)
                 .addOnSuccessListener(aVoid -> callback.onSuccess())
                 .addOnFailureListener(callback::onFailure);
