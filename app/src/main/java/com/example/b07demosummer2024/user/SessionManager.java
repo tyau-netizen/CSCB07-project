@@ -62,6 +62,13 @@ public final class SessionManager {
         return this.currentUser != null;
     }
 
+    public boolean isAdminSession() {
+        if (isLoggedIn()) {
+            return this.currentUser.isAdmin();
+        }
+        return false;
+    }
+
     public void setSessionListener(SessionListener listener) {
         this.listener = listener;
     }

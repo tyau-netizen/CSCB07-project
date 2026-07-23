@@ -23,7 +23,7 @@ public class UserRepository {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    callback.onSuccess(parseUserFromSnapshot(snapshot));
+                    callback.onSuccess(new User(snapshot));
                 } else {
                     callback.onFailure(new Exception("User does not exist in database"));
                 }
@@ -37,22 +37,14 @@ public class UserRepository {
     }
 
     public void saveNewUserProfile(User user, UserSaveCallback callback) {
-        databaseReference.child(user.getUid()).setValue(user)
-                .addOnSuccessListener(aVoid -> callback.onSuccess())
-                .addOnFailureListener(callback::onFailure);
-    }
-
-    private User parseUserFromSnapshot(DataSnapshot snapshot) {
-        String uid = snapshot.getKey();
-        String username = snapshot.child("username").getValue(String.class);
-
-        // Fill map with artifact IDs and ordering keys
-        Map<String, String> savedArtifacts = new LinkedHashMap<>();
-        for (DataSnapshot child : snapshot.child("savedArtifacts").getChildren()) {
-            savedArtifacts.put(child.getKey(), child.getValue(String.class));
-        }
-
-        return new User(uid, username, savedArtifacts);
+        databaseReference.child(user.getUid()).setValue(user.toMap())
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess();
+                    } else {
+                        callback.onFailure(task.getException());
+                    }
+                });
     }
 
     public interface UserFetchCallback {
