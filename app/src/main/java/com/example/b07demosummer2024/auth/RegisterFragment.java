@@ -1,6 +1,9 @@
 package com.example.b07demosummer2024.auth;
 
 import android.os.Bundle;
+
+import com.example.b07demosummer2024.homepage.HomeFragment;
+import com.example.b07demosummer2024.user.SessionManager;
 import com.example.b07demosummer2024.user.User;
 import com.example.b07demosummer2024.user.UserRepository;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +29,7 @@ import com.example.b07demosummer2024.R;
  * Allows users to create an account using email and password via Firebase Auth.
  */
 public class RegisterFragment extends Fragment {
+    SessionManager sessionManager;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -35,6 +39,7 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
+        sessionManager = SessionManager.getInstance();
         // Get references to UI elements
         EditText usernameField = view.findViewById(R.id.register_username_input);
         EditText emailField = view.findViewById(R.id.login_email_input);
@@ -65,8 +70,7 @@ public class RegisterFragment extends Fragment {
                                 @Override
                                 public void onSuccess() {
                                     Toast.makeText(getContext(), "Account created successfully!", Toast.LENGTH_SHORT).show();
-                                    // Navigate back to LoginFragment
-                                    Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_loginFragment);
+                                    onRegisterSuccess();
                                 }
 
                                 @Override
@@ -86,5 +90,34 @@ public class RegisterFragment extends Fragment {
                     R.id.action_registerFragment_to_loginFragment);
         });
         return view;
+    }
+
+    private void onRegisterSuccess() {
+        // Start a user session
+        sessionManager.startSession(new SessionManager.SessionCallback() {
+            @Override
+            public void onSuccess(User user) {
+                // Create a bundle that triggers a welcome message upon navigating to homepage
+                Bundle args = HomeFragment.packWelcomeBundle(false);
+
+                navigateToHome(args);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                displayToastMessage("Failed to load user profile: " + e.getMessage());
+            }
+        });
+    }
+
+    private void navigateToHome(Bundle args) {
+        Navigation.findNavController(requireView())
+                .navigate(R.id.action_registerFragment_to_homeFragment, args);
+    }
+
+    private void displayToastMessage(String message) {
+        if (getContext() != null && message != null) {
+            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        }
     }
 }
