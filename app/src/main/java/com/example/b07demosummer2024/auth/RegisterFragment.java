@@ -46,9 +46,9 @@ public class RegisterFragment extends Fragment {
         registerButton.setOnClickListener(v -> {
             String email = emailField.getText().toString().trim();
             String username = usernameField.getText().toString().trim();
-            String password = passwordField.getText().toString().trim();
-            // Validate fields arent empty
+            String password = passwordField.getText().toString();
 
+            // Validate fields aren't empty
             if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
                 Toast.makeText(getContext(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 return;
