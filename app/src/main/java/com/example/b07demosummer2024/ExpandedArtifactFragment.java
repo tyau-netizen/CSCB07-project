@@ -25,6 +25,10 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.b07demosummer2024.model.ArtifactItem;
+import com.example.b07demosummer2024.user.SavedArtifactsManager;
+import com.example.b07demosummer2024.user.SessionManager;
+import com.example.b07demosummer2024.user.User;
+import com.example.b07demosummer2024.user.UserRepository;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,12 +50,14 @@ public class ExpandedArtifactFragment extends Fragment {
     private LinearLayout relatedContainer;
     private ArtifactItem currentArtifactItem;
     private List<ArtifactItem> allItemsList;
+    private SessionManager sessionManager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_expanded_artifact, container, false);
+        sessionManager = SessionManager.getInstance();
 
         titleText = view.findViewById(R.id.text_artifact_name);
         descText = view.findViewById(R.id.text_artifact_description);
@@ -59,8 +65,19 @@ public class ExpandedArtifactFragment extends Fragment {
         artifactImage = view.findViewById(R.id.image_artifact_large);
         relatedContainer = view.findViewById(R.id.container_related_artifacts);
 
-        // EDIT THIS! SAVE BUTTON
-        saveButton.setOnClickListener(v -> Toast.makeText(getContext(), "Artifact Saved!", Toast.LENGTH_SHORT).show());
+        // Save/unsave artifact
+        /* TODO: Make the save button change appearance based on whether artifact is saved or not.
+        *   Note - the following code will tell you if the artifact is saved or not:
+        *   ----------------------------------------------------------------------------------------
+        *       User currentUser = sessionManager.getCurrentUser();
+        *       SavedArtifactsManager artifactsManager = currentUser.getSavedArtifactsManager();
+        *       String lotNumber = currentArtifactItem.getLotNumber();
+        *       boolean artifactIsSaved = artifactsManager.containsArtifact(lotNumber);
+        *   ----------------------------------------------------------------------------------------
+        *   Also check out handleSaveClick() at the bottom of the file it's a cool method
+        *  */
+        saveButton.setOnClickListener(v -> handleSaveClick());
+
 
         Spinner spinner = view.findViewById(R.id.spinner_sort_related);
         if (spinner != null) {
@@ -270,6 +287,54 @@ public class ExpandedArtifactFragment extends Fragment {
                     // Skip item...
                 }
             });
+        }
+    }
+
+    private void handleSaveClick() {
+        User currentUser = sessionManager.getCurrentUser();
+        SavedArtifactsManager artifactsManager = currentUser.getSavedArtifactsManager();
+        UserRepository userRepository = sessionManager.getUserRepository();
+        String lotNumber = currentArtifactItem.getLotNumber();
+
+        if (!artifactsManager.containsArtifact(lotNumber)) {
+            // Update local data
+            String orderKey = artifactsManager.add(lotNumber);
+            // Update database
+            userRepository.addSavedArtifact(currentUser.getUid(), lotNumber, orderKey,
+                    new UserRepository.UserSaveCallback() {
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(getContext(),
+                                    "Artifact Saved!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+                            artifactsManager.remove(lotNumber);
+                            Toast.makeText(getContext(),
+                                    "Failed to save artifact: " + e.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            // Update database
+            userRepository.removeSavedArtifact(currentUser.getUid(), lotNumber,
+                    new UserRepository.UserSaveCallback() {
+                        @Override
+                        public void onSuccess() {
+                            // Update local data
+                            artifactsManager.remove(lotNumber);
+                            Toast.makeText(getContext(),
+                                    "Artifact Unsaved.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+                            Toast.makeText(getContext(),
+                                    "Failed to unsave artifact: " + e.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 }
