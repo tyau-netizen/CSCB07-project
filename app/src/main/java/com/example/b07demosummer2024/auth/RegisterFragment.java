@@ -1,7 +1,9 @@
 package com.example.b07demosummer2024.auth;
 
 import android.os.Bundle;
-
+import com.example.b07demosummer2024.user.User;
+import com.example.b07demosummer2024.user.UserRepository;
+import com.google.firebase.auth.FirebaseUser;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -34,6 +36,7 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         // Get references to UI elements
+        EditText usernameField = view.findViewById(R.id.register_username_input);
         EditText emailField = view.findViewById(R.id.login_email_input);
         EditText passwordField = view.findViewById(R.id.login_password_input);
         Button registerButton = view.findViewById(R.id.registerButton);
@@ -42,10 +45,11 @@ public class RegisterFragment extends Fragment {
         // Handle register button click
         registerButton.setOnClickListener(v -> {
             String email = emailField.getText().toString().trim();
+            String username = usernameField.getText().toString().trim();
             String password = passwordField.getText().toString().trim();
             // Validate fields arent empty
 
-            if (email.isEmpty() || password.isEmpty()) {
+            if (email.isEmpty() || password.isEmpty() || username.isEmpty()) {
                 Toast.makeText(getContext(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -53,6 +57,23 @@ public class RegisterFragment extends Fragment {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(getContext(), "Account created!", Toast.LENGTH_SHORT).show();
+                            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                            String uid = firebaseUser.getUid();
+                            User newUser = new User(uid, username);
+                            UserRepository userRepository = new UserRepository();
+                            userRepository.saveNewUserProfile(newUser, new UserRepository.UserSaveCallback() {
+                                @Override
+                                public void onSuccess() {
+                                    Toast.makeText(getContext(), "Account created successfully!", Toast.LENGTH_SHORT).show();
+                                    // Navigate back to LoginFragment
+                                    Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_loginFragment);
+                                }
+
+                                @Override
+                                public void onFailure(Exception e) {
+                                    Toast.makeText(getContext(), "Failed to save user: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
                         else {
                             Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
