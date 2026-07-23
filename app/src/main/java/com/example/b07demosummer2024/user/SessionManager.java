@@ -42,9 +42,32 @@ public final class SessionManager {
 
             @Override
             public void onFailure(Exception e) {
-                currentUser = null;
-                if (callback != null) {
-                    callback.onFailure(e);
+                // Defensive check: legacy users may not have user data yet
+                if (e instanceof UserNotFoundException) {
+                    User user = new User(uid, "noUsername");
+
+                    userRepository.saveNewUserProfile(user, new UserRepository.UserSaveCallback() {
+                        @Override
+                        public void onSuccess() {
+                            currentUser = user;
+                            if (callback != null) {
+                                callback.onSuccess(user);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+                            if (callback != null) {
+                                callback.onFailure(new Exception(
+                                        "Failed to create user data: " + e.getMessage(), e));
+                            }
+                        }
+                    });
+                } else {
+                    currentUser = null;
+                    if (callback != null) {
+                        callback.onFailure(e);
+                    }
                 }
             }
         });

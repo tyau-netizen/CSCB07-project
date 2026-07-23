@@ -25,7 +25,7 @@ public class UserRepository {
                 if (snapshot.exists()) {
                     callback.onSuccess(new User(snapshot));
                 } else {
-                    callback.onFailure(new Exception("User does not exist in database"));
+                    callback.onFailure(new UserNotFoundException());
                 }
             }
 
