@@ -7,9 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class User {
-    private static final String USERNAME_KEY = "username";
-    private static final String IS_ADMIN_KEY = "isAdmin";
-    private static final String SAVED_ARTIFACTS_KEY = "savedArtifacts";
+    public static final String USERNAME_KEY = "username";
+    public static final String IS_ADMIN_KEY = "isAdmin";
+    public static final String SAVED_ARTIFACTS_KEY = "savedArtifacts";
 
     private final String uid;
     private final String username;

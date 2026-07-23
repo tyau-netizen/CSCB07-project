@@ -8,14 +8,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class UserRepository {
+    private static final String USER_KEY = "users";
     private final DatabaseReference databaseReference;
 
     public UserRepository() {
-        this.databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        this.databaseReference = FirebaseDatabase.getInstance().getReference(USER_KEY);
     }
 
     public void fetchUserProfile(String uid, UserFetchCallback callback) {
@@ -45,6 +43,30 @@ public class UserRepository {
                         callback.onFailure(task.getException());
                     }
                 });
+    }
+
+    public void updateSavedArtifact(String uid, String artifactId, String orderKey,
+                                    UserSaveCallback callback) {
+        databaseReference.child(uid)
+                .child(User.SAVED_ARTIFACTS_KEY)
+                .child(artifactId)
+                .setValue(orderKey)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (callback != null) callback.onSuccess();
+                    } else {
+                        if (callback != null) callback.onFailure(task.getException());
+                    }
+                });
+    }
+
+    public void addSavedArtifact(String uid, String artifactId, String orderKey,
+                                 UserSaveCallback callback) {
+        updateSavedArtifact(uid, artifactId, orderKey, callback);
+    }
+
+    public void removeSavedArtifact(String uid, String artifactId, UserSaveCallback callback) {
+        updateSavedArtifact(uid, artifactId, null, callback);
     }
 
     public interface UserFetchCallback {

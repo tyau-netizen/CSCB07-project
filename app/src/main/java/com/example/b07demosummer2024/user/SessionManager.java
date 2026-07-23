@@ -100,6 +100,10 @@ public final class SessionManager {
         return currentUser;
     }
 
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
+
     public interface SessionCallback {
         void onSuccess(User user);
         void onFailure(Exception e);
