@@ -3,21 +3,19 @@ package com.example.b07demosummer2024.auth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class AuthRepository {
-
-    private static AuthRepository instance;
+public final class AuthRepository {
     private final FirebaseAuth auth;
 
     private AuthRepository() {
         this.auth = FirebaseAuth.getInstance();
     }
 
+    private static class Holder {
+        private static final AuthRepository INSTANCE = new AuthRepository();
+    }
     // AuthRepository is a singleton - call getInstance() to instantiate
-    public static synchronized AuthRepository getInstance() {
-        if (instance == null) {
-            instance = new AuthRepository();
-        }
-        return instance;
+    public static AuthRepository getInstance() {
+        return Holder.INSTANCE;
     }
 
     // Callback interface for presenter
