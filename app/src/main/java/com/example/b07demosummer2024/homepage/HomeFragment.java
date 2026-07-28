@@ -56,7 +56,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeContract
 
         binding.buttonScroller.setOnClickListener(v -> {
             Navigation.findNavController(requireView()).navigate(
-                    R.id.action_homeFragment_to_scrollerFragment);
+                    R.id.action_homeFragment_to_savedArtifactsFragment);
         });
 
         binding.buttonSpinner.setOnClickListener(v -> {
