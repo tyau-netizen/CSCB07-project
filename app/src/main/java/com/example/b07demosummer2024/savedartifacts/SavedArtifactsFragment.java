@@ -75,7 +75,7 @@ public class SavedArtifactsFragment extends BaseFragment<FragmentSavedArtifactsB
         Bundle args = new Bundle();
         args.putString("ARTIFACT_NO", artifactId);
         Navigation.findNavController(requireView())
-                .navigate(R.id.action_savedArtifactsFragment_to_expandedArtifactFragment);
+                .navigate(R.id.action_savedArtifactsFragment_to_expandedArtifactFragment, args);
     }
 
 
