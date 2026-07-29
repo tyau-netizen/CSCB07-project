@@ -1,6 +1,8 @@
 package com.example.b07demosummer2024.user;
 
 
+import static java.lang.Math.pow;
+
 /*
  * A lexicographical ordering system called Fractional Index.
  *
@@ -34,46 +36,22 @@ public final class FractionalIndex {
 
         // Appending to the end
         if (nextKey == null) {
-            return stepIntegerHead(prevKey, 1);
+            return offsetIntegerHead(prevKey, 1);
         }
 
         // Prepending to the beginning
         if (prevKey == null) {
-            return stepIntegerHead(nextKey, -1);
+            return offsetIntegerHead(nextKey, -1);
         }
 
         // Inserting between two existing keys
         return midpoint(prevKey, nextKey);
     }
 
-    private static String stepIntegerHead(String key, int direction) {
-        String intPart = getIntegerPart(key);
-        String fracPart = key.substring(intPart.length());
-
-        // Drop fractional tail on decrement if present
-        if (direction < 0 && !fracPart.isEmpty()) {
-            return intPart;
-        }
-
-        char head = intPart.charAt(0);
-        String body = intPart.substring(1);
-
-        // Convert body from Base-62 to integer, adjust by direction, and convert back
-        long val = fromBase62(body);
-        if (head < ZERO_HEAD) val = -(val + 1); // Account for negative offset
-
-        val += direction;
-
-        // Re-encode stepped value with updated head marker
-        if (val >= 0) {
-            String encoded = toBase62(val);
-            char newHead = BASE_62_DIGITS.charAt(ZERO_HEAD_INDEX + (encoded.length() - 1));
-            return newHead + encoded;
-        } else {
-            String encoded = toBase62(Math.abs(val) - 1);
-            char newHead = BASE_62_DIGITS.charAt(ZERO_HEAD_INDEX - encoded.length());
-            return newHead + encoded;
-        }
+    private static String offsetIntegerHead(String key, int offset) {
+        String integerPart = getIntegerPart(key);
+        long value = decodeInteger(integerPart);
+        return encodeInteger(value + offset);
     }
 
     private static String midpoint(String a, String b) {
@@ -81,7 +59,7 @@ public final class FractionalIndex {
         String intB = getIntegerPart(b);
 
         if (!intA.equals(intB)) {
-            String nextA = stepIntegerHead(intA, 1);
+            String nextA = offsetIntegerHead(intA, 1);
             if (nextA.compareTo(b) < 0) return nextA;
             return midpointFractional(a, b, intA.length());
         }
@@ -137,15 +115,53 @@ public final class FractionalIndex {
         throw new IllegalArgumentException("Invalid integer head character: " + head);
     }
 
+    private static String encodeInteger(long value) {
+        if (value >= 0) {
+            String base62Val = toBase62(value);
+            int length = base62Val.length();
+            char head = BASE_62_DIGITS.charAt(ZERO_HEAD_INDEX + length - 1);
+            return head + base62Val;
+        } else {
+            long absVal = Math.abs(value) - 1;
+            int length = (int) Math.floor(Math.log(absVal * (BASE - 1) + BASE) / Math.log(BASE));
+            long cumulativeCapacity = (long) (Math.pow(BASE, length) - BASE) / (BASE - 1);
+            long invertedVal = (long) (Math.pow(BASE, length) - 1 - (absVal - cumulativeCapacity));
+
+            StringBuilder sb = new StringBuilder(toBase62(invertedVal));
+            sb.reverse();
+            while (sb.length() < length) {
+                sb.append(BASE_62_DIGITS.charAt(0));
+            }
+            String base62Val = sb.reverse().toString();
+            char head = BASE_62_DIGITS.charAt(ZERO_HEAD_INDEX - length);
+            return head + base62Val;
+        }
+    }
+
+    private static long decodeInteger(String intPart) {
+        char head = intPart.charAt(0);
+        String body = intPart.substring(1);
+        long value = fromBase62(body);
+
+        if (head >= ZERO_HEAD) {
+            return value;
+        }
+        int length = ZERO_HEAD_INDEX - BASE_62_DIGITS.indexOf(head);
+        long cumulativeCapacity = (long) (Math.pow(BASE, length) - BASE) / (BASE - 1);
+        long absVal = (long) (Math.pow(BASE, length) - 1 - value + cumulativeCapacity);
+        return -(absVal + 1);
+
+    }
+
     private static String toBase62(long num) {
         if (num == 0) return "0";
         StringBuilder sb = new StringBuilder();
-        long n = num;
+        long n = Math.abs(num);
         while (n > 0) {
-            sb.insert(0, BASE_62_DIGITS.charAt((int) (n % BASE)));
+            sb.append(BASE_62_DIGITS.charAt((int) (n % BASE)));
             n /= BASE;
         }
-        return sb.toString();
+        return sb.reverse().toString();
     }
 
     private static long fromBase62(String str) {
