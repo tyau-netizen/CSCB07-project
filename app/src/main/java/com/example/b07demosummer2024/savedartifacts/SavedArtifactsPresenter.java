@@ -34,6 +34,7 @@ public class SavedArtifactsPresenter extends BasePresenter<SavedArtifactsContrac
         SavedArtifactsManager artifactsManager = user.getSavedArtifactsManager();
         Map<String, String> savedArtifacts = artifactsManager.getArtifacts();
         Log.d(TAG, "Loading artifacts");
+        Log.d(TAG, savedArtifacts.toString());
 
         int totalItems = savedArtifacts.size();
         AtomicInteger completedCount = new AtomicInteger(0);
