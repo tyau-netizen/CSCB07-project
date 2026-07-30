@@ -84,7 +84,13 @@
         android:id="@+id/expandedArtifactFragment"
         android:name="com.example.b07demosummer2024.ExpandedArtifactFragment"
         android:label="Artifact Details"
-        tools:layout="@layout/fragment_expanded_artifact" />
+        tools:layout="@layout/fragment_expanded_artifact" >
+        <action
+            android:id="@+id/action_expandedArtifactFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
     <fragment
         android:id="@+id/savedArtifactsFragment"
         android:name="com.example.b07demosummer2024.savedartifacts.SavedArtifactsFragment"

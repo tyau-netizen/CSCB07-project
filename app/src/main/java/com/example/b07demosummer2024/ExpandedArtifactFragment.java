@@ -18,10 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.example.b07demosummer2024.model.ArtifactItem;
@@ -64,6 +67,19 @@ public class ExpandedArtifactFragment extends Fragment {
         saveButton = view.findViewById(R.id.button_save_artifact);
         artifactImage = view.findViewById(R.id.image_artifact_large);
         relatedContainer = view.findViewById(R.id.container_related_artifacts);
+
+        // Delete button
+        Button deleteButton = view.findViewById(R.id.delete_button);
+
+        // Admin Check: Only show delete button if current session is Admin
+        if (sessionManager.isAdminSession()) {
+            deleteButton.setVisibility(View.VISIBLE);
+        } else {
+            deleteButton.setVisibility(View.GONE);
+        }
+
+        // Set click listener to show confirmation warning
+        deleteButton.setOnClickListener(v -> showDeleteConfirmationDialog());
 
         // Save/unsave artifact
         /* TODO: Make the save button change appearance based on whether artifact is saved or not.
@@ -289,7 +305,39 @@ public class ExpandedArtifactFragment extends Fragment {
             });
         }
     }
+     // Displays a confirmation warning dialog before deleting an artifact.
 
+    private void showDeleteConfirmationDialog() {
+        new AlertDialog.Builder(requireContext()).setTitle("Delete Artifact")
+                .setMessage("Are you sure you want to delete this artifact? This action cannot be undone.").setPositiveButton("Delete", (dialog, which) -> deleteArtifactFromDatabase())
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()).show();
+    }
+     // Removes the artifact from Firebase Realtime Database and navigates back to Home.
+    private void deleteArtifactFromDatabase() {
+        if (currentArtifactItem == null || currentArtifactItem.getLotNumber() == null) {
+            Toast.makeText(getContext(), "Cannot delete: Artifact details missing", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String artifactId = currentArtifactItem.getLotNumber();
+        DatabaseReference artifactRef = FirebaseDatabase.getInstance("https://taam-100-default-rtdb.firebaseio.com/").getReference("artifacts").child(artifactId);
+
+        // Delete node from Firebase
+        artifactRef.removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(getContext(), "Artifact deleted successfully", Toast.LENGTH_SHORT).show();
+
+                // Navigate back to Home Page
+                Navigation.findNavController(requireView()).navigate(R.id.action_expandedArtifactFragment_to_homeFragment);
+            } else {
+                String errorMsg = "Unknown error";
+                if (task.getException() != null) {
+                    errorMsg = task.getException().getMessage();
+                }
+                Toast.makeText(getContext(), "Failed to delete: " + errorMsg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     private void handleSaveClick() {
         User currentUser = sessionManager.getCurrentUser();
         SavedArtifactsManager artifactsManager = currentUser.getSavedArtifactsManager();
