@@ -74,6 +74,14 @@
                 tools:text="The Toronto Asian Art Museum (TAAM) envisions becoming a vibrant community hub where people of all backgrounds can engage with the richness and diversity of Asian art, culture, and history. We strive to foster understanding, appreciation, and dialogue through accessible exhibitions, educational programs, and hands-on experiences rooted in heritage."
                 android:textColor="#7A7A7A"
                 android:textSize="16sp" />
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Delete Artifact"
+                android:backgroundTint="#D32F2F"
+                android:textColor="#FFFFFF" />
 
             <LinearLayout
                 android:layout_width="match_parent"
