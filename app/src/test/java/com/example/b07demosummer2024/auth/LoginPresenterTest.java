@@ -29,7 +29,7 @@ public class LoginPresenterTest {
     private AuthRepository mockAuthRepository;
     @Mock
     private SessionManager mockSessionManager;
-    private LoginContract.Presenter presenter;
+    private LoginPresenter presenter;
 
     @Before
     public void setUp() {
@@ -47,15 +47,18 @@ public class LoginPresenterTest {
     }
 
     @Test
+    public void handleLogin_emptyPasswordField_displaysErrorMessage() {
+        presenter.handleLogin(TEST_EMAIL, "");
+
+        verify(mockView).displayToastMessage("Please fill out all the fields");
+        verifyNoInteractions(mockAuthRepository);
+        verifyNoInteractions(mockSessionManager);
+    }
+
+    @Test
     public void handleLogin_authFailure_displaysErrorMessage() {
         String errorMsg = "Invalid Credentials";
-
-        doAnswer((Answer<Void>) invocation -> {
-            AuthRepository.AuthCallback callback = invocation.getArgument(2);
-            callback.onFailure(errorMsg);
-            return null;
-        }).when(mockAuthRepository)
-                .signIn(anyString(), anyString(), any(AuthRepository.AuthCallback.class));
+        setupAuthFailure(errorMsg);
 
         presenter.handleLogin(TEST_EMAIL, TEST_PASSWORD);
 
@@ -68,20 +71,8 @@ public class LoginPresenterTest {
     public void handleLogin_authSuccess_sessionFailure_displaysErrorMessage() {
         String sessionErrorMsg = "User data not found";
         Exception sessionError = new Exception(sessionErrorMsg);
-
-        doAnswer((Answer<Void>) invocation -> {
-            AuthRepository.AuthCallback callback = invocation.getArgument(2);
-            callback.onSuccess();
-            return null;
-        }).when(mockAuthRepository)
-                .signIn(anyString(), anyString(), any(AuthRepository.AuthCallback.class));
-
-        doAnswer((Answer<Void>) invocation -> {
-            SessionManager.SessionCallback callback = invocation.getArgument(0);
-            callback.onFailure(sessionError);
-            return null;
-        }).when(mockSessionManager)
-                .startSession(any(SessionManager.SessionCallback.class));
+        setupAuthSuccess();
+        setupSessionFailure(sessionError);
 
         presenter.handleLogin(TEST_EMAIL, TEST_PASSWORD);
 
@@ -91,19 +82,8 @@ public class LoginPresenterTest {
 
     @Test
     public void handleLogin_authSuccess_sessionSuccess_navigatesToHome() {
-        doAnswer((Answer<Void>) invocation -> {
-            AuthRepository.AuthCallback callback = invocation.getArgument(2);
-            callback.onSuccess();
-            return null;
-        }).when(mockAuthRepository)
-                .signIn(anyString(), anyString(), any(AuthRepository.AuthCallback.class));
-
-        doAnswer((Answer<Void>) invocation -> {
-            SessionManager.SessionCallback callback = invocation.getArgument(0);
-            callback.onSuccess();
-            return null;
-        }).when(mockSessionManager)
-                .startSession(any(SessionManager.SessionCallback.class));
+        setupAuthSuccess();
+        setupSessionSuccess();
 
         presenter.handleLogin(TEST_EMAIL, TEST_PASSWORD);
 
@@ -111,9 +91,129 @@ public class LoginPresenterTest {
     }
 
     @Test
+    public void handleLogin_detachedView_doesNothing() {
+        presenter.detachView();
+
+        presenter.handleLogin(TEST_EMAIL, TEST_PASSWORD);
+
+        verifyNoInteractions(mockView);
+        verifyNoInteractions(mockAuthRepository);
+        verifyNoInteractions(mockSessionManager);
+    }
+
+    @Test
+    public void handleLogin_authFailure_viewDetachedBeforeCallback_doesNotUpdateView() {
+        String errorMsg = "Invalid Credentials";
+        setupDetachedViewBeforeAuthFailure(errorMsg);
+
+        presenter.handleLogin(TEST_EMAIL, TEST_PASSWORD);
+
+        verifyNoInteractions(mockView);
+    }
+
+    @Test
+    public void handleLogin_authSuccess_sessionFailure_viewDetachedBeforeCallback_doesNotUpdateView() {
+        String sessionErrorMsg = "User data not found";
+        Exception sessionError = new Exception(sessionErrorMsg);
+        setupAuthSuccess();
+        setupDetachedViewBeforeSessionFailure(sessionError);
+
+        presenter.handleLogin(TEST_EMAIL, TEST_PASSWORD);
+
+        verifyNoInteractions(mockView);
+    }
+
+    @Test
+    public void handleLogin_authSuccess_sessionSuccess_viewDetachedBeforeCallback_doesNotUpdateView() {
+        setupAuthSuccess();
+        setupDetachedViewBeforeSessionSuccess();
+
+        presenter.handleLogin(TEST_EMAIL, TEST_PASSWORD);
+
+        verifyNoInteractions(mockView);
+    }
+
+    @Test
     public void handleRegisterClick_navigatesToRegister() {
         presenter.handleRegisterClick();
 
         verify(mockView).navigateToRegister();
+    }
+
+    @Test
+    public void handleRegisterClick_detachedView_doesNotUpdateView() {
+        presenter.detachView();
+
+        presenter.handleRegisterClick();
+
+        verifyNoInteractions(mockView);
+    }
+
+    // Helper methods ------------------------------------------------------------------------------
+
+    private void setupAuthFailure(String errorMsg) {
+        doAnswer((Answer<Void>) invocation -> {
+            AuthRepository.AuthCallback callback = invocation.getArgument(2);
+            callback.onFailure(errorMsg);
+            return null;
+        }).when(mockAuthRepository)
+                .signIn(anyString(), anyString(), any(AuthRepository.AuthCallback.class));
+    }
+
+    private void setupAuthSuccess() {
+        doAnswer((Answer<Void>) invocation -> {
+            AuthRepository.AuthCallback callback = invocation.getArgument(2);
+            callback.onSuccess();
+            return null;
+        }).when(mockAuthRepository)
+                .signIn(anyString(), anyString(), any(AuthRepository.AuthCallback.class));
+    }
+
+    private void setupDetachedViewBeforeAuthFailure(String errorMsg) {
+        doAnswer((Answer<Void>) invocation -> {
+            AuthRepository.AuthCallback callback = invocation.getArgument(2);
+            presenter.detachView();
+            callback.onFailure(errorMsg);
+            return null;
+        }).when(mockAuthRepository)
+                .signIn(anyString(), anyString(), any(AuthRepository.AuthCallback.class));
+    }
+
+    private void setupSessionFailure(Exception sessionError) {
+        doAnswer((Answer<Void>) invocation -> {
+            SessionManager.SessionCallback callback = invocation.getArgument(0);
+            callback.onFailure(sessionError);
+            return null;
+        }).when(mockSessionManager)
+                .startSession(any(SessionManager.SessionCallback.class));
+    }
+
+    private void setupSessionSuccess() {
+        doAnswer((Answer<Void>) invocation -> {
+            SessionManager.SessionCallback callback = invocation.getArgument(0);
+            callback.onSuccess();
+            return null;
+        }).when(mockSessionManager)
+                .startSession(any(SessionManager.SessionCallback.class));
+    }
+
+    private void setupDetachedViewBeforeSessionSuccess() {
+        doAnswer((Answer<Void>) invocation -> {
+            SessionManager.SessionCallback callback = invocation.getArgument(0);
+            presenter.detachView();
+            callback.onSuccess();
+            return null;
+        }).when(mockSessionManager)
+                .startSession(any(SessionManager.SessionCallback.class));
+    }
+
+    private void setupDetachedViewBeforeSessionFailure(Exception sessionError) {
+        doAnswer((Answer<Void>) invocation -> {
+            SessionManager.SessionCallback callback = invocation.getArgument(0);
+            presenter.detachView();
+            callback.onFailure(sessionError);
+            return null;
+        }).when(mockSessionManager)
+                .startSession(any(SessionManager.SessionCallback.class));
     }
 }

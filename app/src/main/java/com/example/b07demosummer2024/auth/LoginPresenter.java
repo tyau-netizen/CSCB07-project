@@ -47,7 +47,10 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
 
                     @Override
                     public void onFailure(Exception e) {
-                        view.displayToastMessage("Failed to load user profile: " + e.getMessage());
+                        if (view != null) {
+                            view.displayToastMessage(
+                                    "Failed to load user profile: " + e.getMessage());
+                        }
                     }
                 });
             }
