@@ -57,5 +57,17 @@ public final class AuthRepository {
     public void signOut() {
         auth.signOut();
     }
-
+    // Attempt to sign up a user with email and password, return result through callback
+    public void signUp(String email, String password, AuthCallback callback) {
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && auth.getCurrentUser() != null) {
+                        callback.onSuccess();
+                    } else {
+                        String error = task.getException() != null ?
+                                task.getException().getMessage() : "Sign up failed.";
+                        callback.onFailure(error);
+                    }
+                });
+    }
 }
