@@ -20,7 +20,7 @@ public final class AuthRepository {
 
     // Callback interface for presenter
     public interface AuthCallback {
-        void onSuccess(String email);
+        void onSuccess();
         void onFailure(String errorMessage);
     }
 
@@ -30,7 +30,7 @@ public final class AuthRepository {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && auth.getCurrentUser() != null) {
                         // Return successfully logged-in user email
-                        callback.onSuccess(auth.getCurrentUser().getEmail());
+                        callback.onSuccess();
                     } else {
                         // Return error message from Firebase
                         String error = task.getException() != null ?

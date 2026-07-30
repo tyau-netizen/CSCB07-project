@@ -96,7 +96,7 @@ public class RegisterFragment extends Fragment {
         // Start a user session
         sessionManager.startSession(new SessionManager.SessionCallback() {
             @Override
-            public void onSuccess(User user) {
+            public void onSuccess() {
                 // Create a bundle that triggers a welcome message upon navigating to homepage
                 Bundle args = HomeFragment.packWelcomeBundle(false);
 
