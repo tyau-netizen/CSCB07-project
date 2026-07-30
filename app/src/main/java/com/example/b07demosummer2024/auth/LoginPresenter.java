@@ -18,6 +18,12 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
         this.sessionManager = SessionManager.getInstance();
     }
 
+    // Test constructor
+    public LoginPresenter(AuthRepository authRepository, SessionManager sessionManager) {
+        this.repository = authRepository;
+        this.sessionManager = sessionManager;
+    }
+
     public void handleLogin(String email, String password) {
         if (view == null) return;
 
