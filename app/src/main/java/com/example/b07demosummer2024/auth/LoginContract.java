@@ -8,7 +8,7 @@ public interface LoginContract {
 
     interface View extends BaseContract.View {
         void navigateToRegister();
-        void navigateToHome(Bundle args);
+        void navigateToHome(boolean isGuest);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {

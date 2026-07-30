@@ -29,14 +29,13 @@ public class LoginPresenter extends BasePresenter<LoginContract.View>
         // Attempt to sign in
         repository.signIn(email, password, new AuthRepository.AuthCallback() {
             @Override
-            public void onSuccess(String email) {
+            public void onSuccess() {
                 // Start a user session
                 sessionManager.startSession(new SessionManager.SessionCallback() {
                     @Override
-                    public void onSuccess(User user) {
+                    public void onSuccess() {
                         if (view != null) {
-                            Bundle args = HomeFragment.packWelcomeBundle(false);
-                            view.navigateToHome(args);
+                            view.navigateToHome(false);
                         }
                     }
 

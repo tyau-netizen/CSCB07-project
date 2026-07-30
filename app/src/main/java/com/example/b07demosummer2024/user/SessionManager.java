@@ -36,7 +36,7 @@ public final class SessionManager {
             public void onSuccess(User user) {
                 currentUser = user;
                 if (callback != null) {
-                    callback.onSuccess(user);
+                    callback.onSuccess();
                 }
             }
 
@@ -51,7 +51,7 @@ public final class SessionManager {
                         public void onSuccess() {
                             currentUser = user;
                             if (callback != null) {
-                                callback.onSuccess(user);
+                                callback.onSuccess();
                             }
                         }
 
@@ -105,7 +105,7 @@ public final class SessionManager {
     }
 
     public interface SessionCallback {
-        void onSuccess(User user);
+        void onSuccess();
         void onFailure(Exception e);
     }
     public interface SessionListener {

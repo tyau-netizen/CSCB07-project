@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import com.example.b07demosummer2024.R;
 import com.example.b07demosummer2024.base.BaseFragment;
 import com.example.b07demosummer2024.databinding.FragmentLoginBinding;
+import com.example.b07demosummer2024.homepage.HomeFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,7 +63,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginContr
     }
 
     @Override
-    public void navigateToHome(Bundle args) {
+    public void navigateToHome(boolean isGuest) {
+        Bundle args = HomeFragment.packWelcomeBundle(false);
         Navigation.findNavController(requireView())
                 .navigate(R.id.action_loginFragment_to_homeFragment, args);
     }
