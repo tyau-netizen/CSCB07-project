@@ -43,9 +43,14 @@ import java.util.List;
 import java.util.Objects;
 
 
+/**
+ * This is the fragment for the "expanded" view of one artifact - basically the
+ * full detail page you see when you tap into an artifact from the list. Shows
+ * the image, all the info fields, related artifacts, and (if you're an admin)
+ * the edit/delete buttons.
+ */
 public class ExpandedArtifactFragment extends Fragment {
 
-    // --- CLASS VARIABLES ---
     private TextView titleText;
     private TextView descText;
     private ImageButton saveButton;
@@ -55,6 +60,18 @@ public class ExpandedArtifactFragment extends Fragment {
     private List<ArtifactItem> allItemsList;
     private SessionManager sessionManager;
 
+    /**
+     * Sets up the whole page basically - grabs all the views, wires up the
+     * admin-only edit/delete buttons, the save button, and the sort spinner
+     * for related artifacts. Then kicks off the fetch for the artifact data
+     * (using the ARTIFACT_NO passed in through the fragment args, or a
+     * default if none was passed).
+     *
+     * @param inflater used to inflate the fragment's xml layout
+     * @param container the parent view this fragment gets attached to
+     * @param savedInstanceState leftover state from before, if there is any
+     * @return the fully set up View for this fragment
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
