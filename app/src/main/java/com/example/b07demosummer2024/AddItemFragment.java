@@ -1,6 +1,5 @@
 package com.example.b07demosummer2024;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +35,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment that provides a form for administrators to add new artifacts to the collection.
+ * Displays all fields from the ArtifactItem data model, with mandatory fields marked
+ * with an asterisk (*). Handles image upload to Supabase Storage, validates input,
+ * checks for duplicate lot numbers, and saves the new artifact to Firebase Realtime Database.
+ * This is part of Sprint 3 and is accessible only to admin users via the ManageItemsFragment.
+ */
 public class AddItemFragment extends Fragment {
 
     private static final String TAG = "AddItemFragment";
@@ -71,7 +77,11 @@ public class AddItemFragment extends Fragment {
     // Supabase Uploader
     private SupabaseImageUploader imageUploader;
 
-    // Image Picker Launcher
+    /**
+     * Launcher for picking an image from the device gallery.
+     * When an image is selected, it displays a preview and automatically uploads
+     * to Supabase Storage using the artifact's lot number as the folder name.
+     */
     private final ActivityResultLauncher<String> pickImageLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 if (uri != null) {
@@ -85,6 +95,17 @@ public class AddItemFragment extends Fragment {
                 }
             });
 
+    /**
+     * Inflates the fragment layout, initializes all views, sets up the spinners,
+     * wires up the image picker, and prepares the form for user input.
+     * The user must enter a lot number before picking an image, as the lot number
+     * is used as the folder name in Supabase Storage.
+     *
+     * @param inflater           Used to inflate the fragment's XML layout
+     * @param container          The parent view this fragment is attached to
+     * @param savedInstanceState Any saved state from a previous instance
+     * @return The fully initialized View for this fragment
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -143,8 +164,14 @@ public class AddItemFragment extends Fragment {
         return view;
     }
 
-    /**
-     * Uploads the selected image to Supabase Storage
+     /**
+     * Uploads the selected image to Supabase Storage using the artifact's lot number
+     * as the folder name. Displays a progress toast during upload and saves the
+     * resulting public URL to the uploadedImageUrl field on success.
+     * The upload happens asynchronously; the user can continue filling out other
+     * fields while the image uploads in the background.
+     *
+     * @param imageUri The URI of the image selected from the device gallery
      */
     private void uploadImageToSupabase(Uri imageUri) {
         String lotNumber = editTextLotNumber.getText().toString().trim();
@@ -156,13 +183,13 @@ public class AddItemFragment extends Fragment {
             public void onSuccess(String publicUrl) {
                 uploadedImageUrl = publicUrl;
                 Toast.makeText(getContext(), "Image uploaded successfully!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "Uploaded image URL: " + publicUrl);
+//                Log.d(TAG, "Uploaded image URL: " + publicUrl);
             }
 
             @Override
             public void onError(String message) {
                 Toast.makeText(getContext(), "Image upload failed: " + message, Toast.LENGTH_LONG).show();
-                Log.e(TAG, "Image upload error: " + message);
+//                Log.e(TAG, "Image upload error: " + message);
             }
         });
     }
@@ -213,7 +240,12 @@ public class AddItemFragment extends Fragment {
     }
 
     /**
-     * Validates all fields and adds the artifact to Firebase
+     * Validates all mandatory fields, converts spinner selections to enum
+     * constants, and checks that the lot number is unique in the database.
+     * If any mandatory field is empty, the corresponding EditText is highlighted
+     * with an error message. If the lot number already exists, the user is prompted
+     * to choose a different one. Only after all validation passes does it proceed
+     * to save the artifact.
      */
     private void addArtifact() {
         //Get all field values
@@ -283,7 +315,26 @@ public class AddItemFragment extends Fragment {
     }
 
     /**
-     * Checks if the lot number already exists in the database
+     * Queries Firebase Realtime Database to check if the given lot number
+     * already exists in the "artifacts" node. If it does, the user is shown
+     * an error and asked to choose a different lot number. If not, it proceeds
+     * to save the artifact.
+     *
+     * @param lotNumber          The unique identifier to check
+     * @param name               Artifact name
+     * @param description        Detailed description
+     * @param culturalOrigin     Cultural/geographic origin
+     * @param dimensions         Physical dimensions
+     * @param conditionReport    Condition description
+     * @param currentLocation    Current storage location
+     * @param acquisitionMethod  How the artifact was acquired
+     * @param provenance         Ownership history
+     * @param accessionNumber    Museum accession number
+     * @param notes              Additional notes
+     * @param imageUrl           Public URL of the uploaded image
+     * @param category           Artifact category enum
+     * @param material           Primary material enum
+     * @param dynasty            Historical dynasty/period enum
      */
     private void checkLotNumberUniqueness(String lotNumber, String name, String description,
                                           String culturalOrigin, String dimensions,
@@ -311,14 +362,35 @@ public class AddItemFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Error checking lot number uniqueness", databaseError.toException());
+//                Log.e(TAG, "Error checking lot number uniqueness", databaseError.toException());
                 Toast.makeText(getContext(), "Error checking lot number: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     /**
-     * Saves the artifact to Firebase Realtime Database
+     * Creates a new ArtifactItem object with all provided field values and saves it
+     * to Firebase Realtime Database under the path "artifacts/{lotNumber}".
+     * Optional fields are only set if they are non-empty. Default values are
+     * assigned to imageInt (0) and saved (false). On success, the user is shown
+     * a confirmation toast and navigated back to the artifact list. On failure,
+     * an error toast is displayed.
+     *
+     * @param lotNumber          The unique identifier (used as the Firebase key)
+     * @param name               Artifact name
+     * @param description        Detailed description
+     * @param culturalOrigin     Cultural/geographic origin
+     * @param dimensions         Physical dimensions
+     * @param conditionReport    Condition description
+     * @param currentLocation    Current storage location
+     * @param acquisitionMethod  How the artifact was acquired
+     * @param provenance         Ownership history
+     * @param accessionNumber    Museum accession number
+     * @param notes              Additional notes
+     * @param imageUrl           Public URL of the uploaded image
+     * @param category           Artifact category enum
+     * @param material           Primary material enum
+     * @param dynasty            Historical dynasty/period enum
      */
     private void saveArtifactToFirebase(String lotNumber, String name, String description,
                                         String culturalOrigin, String dimensions,
@@ -359,7 +431,7 @@ public class AddItemFragment extends Fragment {
                     navigateBackToList();
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error saving artifact", e);
+//                    Log.e(TAG, "Error saving artifact", e);
                     Toast.makeText(getContext(), "Failed to add artifact: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 });
     }

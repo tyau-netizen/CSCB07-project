@@ -4,14 +4,13 @@ import java.util.Locale;
 
 /**
  * Data model representing a single museum artifact.
-
  * Mandatory fields (per requirements): lotNumber, name, description, category, material,
                                         dynastyPeriod.
  * Everything else is optional and may be null/empty.
  */
 public class ArtifactItem { 
 
-    // ---- Mandatory fields ----
+    // Mandatory fields
     private String lotNumber;          // unique identifier
     private String name;
     private String description;
@@ -19,7 +18,7 @@ public class ArtifactItem {
     private Material material;
     private DynastyPeriod dynastyPeriod;
 
-    // ---- Optional fields ----
+    // Optional fields
     private String culturalOrigin;
     private String dimensions;
     private String conditionReport;
@@ -35,10 +34,23 @@ public class ArtifactItem {
     // Whether the current user has saved/bookmarked this artifact.
     private boolean saved;
 
+    /**
+     * Default constructor required for Firebase deserialization.
+     */
     public ArtifactItem() {
         // Empty constructor
     }
 
+    /**
+     * Constructs an ArtifactItem with all mandatory fields.
+     *
+     * @param lotNumber     Unique identifier (must be unique in Firebase)
+     * @param name          Artifact name
+     * @param description   Detailed description
+     * @param category      Artifact category enum
+     * @param material      Primary material enum
+     * @param dynastyPeriod Historical dynasty/period enum
+     */
     public ArtifactItem(String lotNumber, String name, String description, Category category,
                     Material material, DynastyPeriod dynastyPeriod) {
         this.lotNumber = lotNumber;
@@ -49,7 +61,7 @@ public class ArtifactItem {
         this.dynastyPeriod = dynastyPeriod;
     }
 
-    // ---- Getters and setters ----
+    // Getters and setters
 
     public String getLotNumber() {
         return lotNumber;
@@ -181,32 +193,6 @@ public class ArtifactItem {
 
     public void setSaved(boolean saved) {
         this.saved = saved;
-    }
-
-    public boolean matchesKeyword(String keyword) {
-        if (keyword == null || keyword.trim().isEmpty()) {
-            return true; // empty search
-        }
-        String q = keyword.toLowerCase(Locale.getDefault()).trim();
-
-        return containsIgnoreCase(lotNumber, q)
-                || containsIgnoreCase(name, q)
-                || containsIgnoreCase(description, q)
-                || (category != null && containsIgnoreCase(category.getDisplayName(), q))
-                || (material != null && containsIgnoreCase(material.getDisplayName(), q))
-                || (dynastyPeriod != null && containsIgnoreCase(dynastyPeriod.getDisplayName(), q))
-                || containsIgnoreCase(culturalOrigin, q)
-                || containsIgnoreCase(dimensions, q)
-                || containsIgnoreCase(conditionReport, q)
-                || containsIgnoreCase(currentLocation, q)
-                || containsIgnoreCase(acquisitionMethod, q)
-                || containsIgnoreCase(provenance, q)
-                || containsIgnoreCase(accessionNumber, q)
-                || containsIgnoreCase(notes, q);
-    }
-
-    private boolean containsIgnoreCase(String field, String query) {
-        return field != null && field.toLowerCase(Locale.getDefault()).contains(query);
     }
 }
 

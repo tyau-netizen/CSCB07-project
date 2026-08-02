@@ -120,7 +120,6 @@ public class SupabaseImageUploader {
             return;
         }
 
-        // Image file path, like artifacts/LOT123/1719000000000.jpg
         String filePath = buildFilePath(lotNumber, extension);
 
         // Private Storage API URL used for uploading the file
