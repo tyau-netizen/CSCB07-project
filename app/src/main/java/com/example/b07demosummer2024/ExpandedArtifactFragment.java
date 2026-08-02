@@ -99,7 +99,7 @@ public class ExpandedArtifactFragment extends Fragment {
         deleteButton.setOnClickListener(v -> showDeleteConfirmationDialog());
 
         // Edit button
-        Button editButton = view.findViewById(R.id.button_edit_artifact);
+        ImageButton editButton = view.findViewById(R.id.button_edit_artifact);
 
         // Admin Check: Only show edit button if current session is Admin
         if (sessionManager.isAdminSession()) {
