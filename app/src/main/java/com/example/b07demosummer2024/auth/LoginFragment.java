@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.b07demosummer2024.R;
@@ -16,10 +14,6 @@ import com.example.b07demosummer2024.base.BaseFragment;
 import com.example.b07demosummer2024.databinding.FragmentLoginBinding;
 import com.example.b07demosummer2024.homepage.HomeFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Handles user login input and validation
- */
 public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginContract.View,
         LoginContract.Presenter> implements LoginContract.View {
 
@@ -66,6 +60,6 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginContr
     public void navigateToHome(boolean isGuest) {
         Bundle args = HomeFragment.packWelcomeBundle(false);
         Navigation.findNavController(requireView())
-                .navigate(R.id.action_loginFragment_to_homeFragment, args);
+                .navigate(R.id.action_loginFragment_to_recyclerViewFragment, args);
     }
 }

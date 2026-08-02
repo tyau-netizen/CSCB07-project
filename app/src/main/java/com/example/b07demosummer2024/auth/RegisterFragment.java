@@ -59,6 +59,6 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Regi
     public void navigateToHome(boolean isGuest) {
         Bundle args = HomeFragment.packWelcomeBundle(isGuest);
         Navigation.findNavController(requireView()).navigate(
-                R.id.action_registerFragment_to_homeFragment, args);
+                R.id.action_registerFragment_to_recyclerViewFragment, args);
     }
 }

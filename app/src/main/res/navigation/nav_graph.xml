@@ -13,11 +13,15 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <argument
+            android:name="hideBottomNav"
+            app:argType="boolean"
+            android:defaultValue="true" />
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
+            android:id="@+id/action_loginFragment_to_recyclerViewFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -28,8 +32,12 @@
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <argument
+            android:name="hideBottomNav"
+            app:argType="boolean"
+            android:defaultValue="true" />
         <action
-            android:id="@+id/action_registerFragment_to_homeFragment"
+            android:id="@+id/action_registerFragment_to_recyclerViewFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
@@ -41,17 +49,6 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_homeFragment_to_recyclerViewFragment"
-            app:destination="@id/recyclerViewFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_spinnerFragment"
-            app:destination="@id/spinnerFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_manageItemsFragment"
             app:destination="@id/manageItemsFragment" />
         <action
@@ -61,19 +58,10 @@
             android:name="username"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_homeFragment_to_expandedArtifactFragment"
+            app:destination="@id/expandedArtifactFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/scrollerFragment"
-        android:name="com.example.b07demosummer2024.misc.ScrollerFragment"
-        android:label="fragment_scroller"
-        tools:layout="@layout/fragment_scroller" />
-
-    <fragment
-        android:id="@+id/spinnerFragment"
-        android:name="com.example.b07demosummer2024.misc.SpinnerFragment"
-        android:label="fragment_spinner"
-        tools:layout="@layout/fragment_spinner" />
 
     <fragment
         android:id="@+id/manageItemsFragment"
@@ -91,33 +79,23 @@
             app:popUpTo="@id/manageItemsFragment"
             app:popUpToInclusive="true" />
     </fragment>
-
-    <fragment
-        android:id="@+id/recyclerViewFragment"
-        android:name="com.example.b07demosummer2024.RecyclerViewFragment"
-        android:label="Artifacts"
-        tools:layout="@layout/fragment_recycler_view_static" >
-        <action
-            android:id="@+id/action_recyclerViewFragment_to_expandedArtifactFragment"
-            app:destination="@id/expandedArtifactFragment" />
-    </fragment>
-
     <fragment
         android:id="@+id/expandedArtifactFragment"
         android:name="com.example.b07demosummer2024.ExpandedArtifactFragment"
         android:label="Artifact Details"
         tools:layout="@layout/fragment_expanded_artifact" >
         <action
-            android:id="@+id/action_expandedArtifactFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="false" />
-
-        <action
             android:id="@+id/action_expandedArtifactFragment_to_editArtifactFragment"
-            app:destination="@id/editArtifactFragment"
-            app:popUpTo="@id/expandedArtifactFragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/editArtifactFragment" />
+        <argument
+            android:name="hideBottomNav"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <action
+            android:id="@+id/action_expandedArtifactFragment_to_recyclerViewFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -129,23 +107,36 @@
             android:id="@+id/action_savedArtifactsFragment_to_expandedArtifactFragment"
             app:destination="@id/expandedArtifactFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editArtifactFragment"
+        android:name="com.example.b07demosummer2024.EditArtifactFragment"
+        android:label="fragment_edit_artifact">
+        <argument
+            android:name="hideBottomNav"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/addItemFragment"
         android:name="com.example.b07demosummer2024.AddItemFragment"
         android:label="Add Artifact"
-        tools:layout="@layout/fragment_add_item" />
+        tools:layout="@layout/fragment_add_item" >
+        <argument
+            android:name="hideBottomNav"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/deleteItemFragment"
         android:name="com.example.b07demosummer2024.DeleteItemFragment"
         android:label="Delete Artifact"
-        tools:layout="@layout/fragment_delete_item" />
-
-    <fragment
-        android:id="@+id/editArtifactFragment"
-        android:name="com.example.b07demosummer2024.EditArtifactFragment"
-        android:label="Edit Artifact"
-        tools:layout="@layout/fragment_edit_artifact" />
+        tools:layout="@layout/fragment_delete_item" >
+        <argument
+            android:name="hideBottomNav"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </fragment>
 
 </navigation>

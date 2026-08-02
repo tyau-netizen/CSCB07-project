@@ -119,17 +119,6 @@ public class ExpandedArtifactFragment extends Fragment {
                     .navigate(R.id.action_expandedArtifactFragment_to_editArtifactFragment, args);
         });
 
-        // Save/unsave artifact
-        /* TODO: Make the save button change appearance based on whether artifact is saved or not.
-         *   Note - the following code will tell you if the artifact is saved or not:
-         *   ----------------------------------------------------------------------------------------
-         *       User currentUser = sessionManager.getCurrentUser();
-         *       SavedArtifactsManager artifactsManager = currentUser.getSavedArtifactsManager();
-         *       String lotNumber = currentArtifactItem.getLotNumber();
-         *       boolean artifactIsSaved = artifactsManager.containsArtifact(lotNumber);
-         *   ----------------------------------------------------------------------------------------
-         *   Also check out handleSaveClick() at the bottom of the file it's a cool method
-         *  */
         saveButton.setOnClickListener(v -> handleSaveClick());
 
 
@@ -367,7 +356,7 @@ public class ExpandedArtifactFragment extends Fragment {
                 Toast.makeText(getContext(), "Artifact deleted successfully", Toast.LENGTH_SHORT).show();
 
                 // Navigate back to Home Page
-                Navigation.findNavController(requireView()).navigate(R.id.action_expandedArtifactFragment_to_homeFragment);
+                Navigation.findNavController(requireView()).navigate(R.id.action_expandedArtifactFragment_to_recyclerViewFragment);
             } else {
                 String errorMsg = "Unknown error";
                 if (task.getException() != null) {
