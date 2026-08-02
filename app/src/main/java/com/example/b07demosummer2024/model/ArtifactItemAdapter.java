@@ -50,14 +50,23 @@ public class ArtifactItemAdapter extends RecyclerView.Adapter<ArtifactItemAdapte
             holder.tvDynastyPeriod.setText("Unknown Dynasty Period");
         }
 
-        if (item.getImageUri() != null && !item.getImageUri().isEmpty()) {
+        String imageUrl = item.getImageUri();
+
+        // Check if the URL is valid
+        if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+            // Load the image from the URL, but fallback to placeholder if it fails
             Glide.with(holder.itemView.getContext())
-                    .load(item.getImageUri())
+                    .load(imageUrl)
                     .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.placeholder_image)
+                    .centerCrop()
                     .into(holder.imageView);
         } else {
-            // no image
-
+            // URL is EMPTY - explicitly load the placeholder
+            Glide.with(holder.itemView.getContext())
+                    .load(R.drawable.placeholder_image)
+                    .centerCrop()
+                    .into(holder.imageView);
         }
 
 

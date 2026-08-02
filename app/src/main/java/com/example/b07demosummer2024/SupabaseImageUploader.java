@@ -1,10 +1,11 @@
-package com.example.yourpackage;
+package com.example.b07demosummer2024;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import androidx.annotation.NonNull;
@@ -84,6 +85,7 @@ public class SupabaseImageUploader {
 
         // Private Storage API URL used for uploading the file
         HttpUrl uploadUrl = buildStorageUrl("storage/v1/object", filePath);
+        Log.d("imagetest", "Upload URL: " + uploadUrl.toString()); // ADD THIS LINE
         if (uploadUrl == null) {
             callback.onError("Supabase URL is invalid.");
             return;
@@ -108,6 +110,7 @@ public class SupabaseImageUploader {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 try {
+
                     if (response.isSuccessful()) {
                         // Public URL that can be stored in Firebase and loaded with Glide
                         HttpUrl publicUrl = buildStorageUrl("storage/v1/object/public", filePath);
@@ -117,8 +120,10 @@ public class SupabaseImageUploader {
                             postSuccess(callback, publicUrl.toString());
                         }
                     } else {
-                        postError(callback, "Image upload failed with status " + response.code() + ".");
+                        postError(callback, "Image upload failed with status " + response.code() + ". " );
                     }
+                } catch (Exception e) {
+                    postError(callback, "Upload error: " + e.getMessage());
                 } finally {
                     response.close();
                 }

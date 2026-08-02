@@ -294,6 +294,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- NOTES -->
         <TextView
             android:id="@+id/textViewNotes"
             android:layout_width="0dp"
@@ -317,29 +318,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!--IMAGE PICKER SECTION-->
         <TextView
-            android:id="@+id/textViewImageUrl"
+            android:id="@+id/textViewImagePicker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Image URL"
+            android:text="Artifact Image"
             android:textStyle="bold"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/editTextNotes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <EditText
-            android:id="@+id/editTextImageUrl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="https://example.com/image.jpg"
-            android:inputType="textUri"
+        <ImageView
+            android:id="@+id/artifactImageView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder_image"
+            android:background="@android:drawable/editbox_background"
             android:layout_marginTop="4dp"
-            app:layout_constraintTop_toBottomOf="@+id/textViewImageUrl"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewImagePicker"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- ADD BUTTON -->
+        <Button
+            android:id="@+id/buttonPickImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pick Image"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="@+id/artifactImageView"
+            app:layout_constraintStart_toEndOf="@+id/artifactImageView"
+            app:layout_constraintBottom_toBottomOf="@+id/artifactImageView" />
+
+
+        <!--ADD BUTTON-->
         <Button
             android:id="@+id/buttonAdd"
             android:layout_width="0dp"
@@ -348,7 +361,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="32dp"
             android:backgroundTint="#B09867"
-            app:layout_constraintTop_toBottomOf="@+id/editTextImageUrl"
+            app:layout_constraintTop_toBottomOf="@+id/artifactImageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

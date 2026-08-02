@@ -8,13 +8,13 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
-import com.example.b07demosummer2024.AddItemFragment;
-import com.example.b07demosummer2024.DeleteItemFragment;
 import com.example.b07demosummer2024.R;
 
 public class ManageItemsFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -24,24 +24,21 @@ public class ManageItemsFragment extends Fragment {
         Button buttonDeleteItem = view.findViewById(R.id.buttonDeleteItem);
         Button buttonBack = view.findViewById(R.id.buttonBack);
 
-        buttonAddItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new AddItemFragment());
-            }
+        buttonAddItem.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireView());
+            navController.navigate(R.id.action_manageItemsFragment_to_addItemFragment);
         });
 
-        buttonDeleteItem.setOnClickListener(v -> loadFragment(new DeleteItemFragment()));
+        buttonDeleteItem.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireView());
+            navController.navigate(R.id.action_manageItemsFragment_to_deleteItemFragment);
+        });
 
-        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+        buttonBack.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireView());
+            navController.navigateUp(); // This still works perfectly for going back
+        });
 
         return view;
-    }
-
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.nav_host_fragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 }
