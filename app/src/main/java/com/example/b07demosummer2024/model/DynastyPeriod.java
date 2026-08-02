@@ -37,4 +37,13 @@ public enum DynastyPeriod {
     public String toString() {
         return displayName;
     }
+
+    public static DynastyPeriod fromDisplayName(String displayName) {
+        for (DynastyPeriod c : DynastyPeriod.values()) {
+            if (c.getDisplayName().equalsIgnoreCase(displayName)) {
+                return c;
+            }
+        }
+        return null; // Return null if no match found
+    }
 }

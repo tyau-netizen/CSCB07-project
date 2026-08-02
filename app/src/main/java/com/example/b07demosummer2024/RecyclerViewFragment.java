@@ -34,21 +34,32 @@ import com.example.b07demosummer2024.model.Category;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment that displays a paginated, filterable list of artifacts.
+ * Supports category filtering via spinner, keyword search via SearchView,
+ * and configurable page size (12, 24, or All items per page).
+ * User preferences for page size are persisted using SharedPreferences.
+ */
 public class RecyclerViewFragment extends Fragment {
 
-
+    // UI components
     private RecyclerView recyclerView;
     private ArtifactItemAdapter itemAdapter;
     private List<ArtifactItem> itemList = new ArrayList<>();
     private List<ArtifactItem> masterList = new ArrayList<>();
 
+    // Filter state
     private String currentCategoryFilter = "All Artifacts";
     private String currentSearchQuery = "";
 
+    // UI views
     private SearchView searchView;
     private Spinner spinnerCategory;
 
+    // Firebase
     private FirebaseDatabase db;
+
+    // SharedPreferences
     private static final String PREFS_NAME = "ArtifactAppPrefs";
     private static final String KEY_PAGE_SIZE = "selected_page_size";
 
@@ -56,6 +67,7 @@ public class RecyclerViewFragment extends Fragment {
     private int currentPageSize = 12;
     private int currentPage = 1;
 
+    // Pagination UI components
     private Spinner spinnerPageSize;
     private Button btnPrevious;
     private Button btnNext;
@@ -63,6 +75,16 @@ public class RecyclerViewFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private static final String ALL_ARTIFACTS_LABEL = "All Artifacts";
 
+    /**
+     * Inflates the fragment layout, initializes all views, sets up the
+     * RecyclerView adapter, and configures filters and pagination controls.
+     * Restores saved page size preference from SharedPreferences.
+     *
+     * @param inflater           Used to inflate the fragment's XML layout
+     * @param container          The parent view this fragment is attached to
+     * @param savedInstanceState Any saved state from a previous instance
+     * @return The fully initialized View for this fragment
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -195,6 +217,11 @@ public class RecyclerViewFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Fetches all artifacts from Firebase Realtime Database in a single
+     * read operation. Stores the full dataset in masterList, then calls
+     * applyFilters() to display the initial paginated page.
+     */
     private void fetchAllArtifactsOnce() {
         DatabaseReference artifactsRef = db.getReference("artifacts");
         artifactsRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -217,6 +244,11 @@ public class RecyclerViewFragment extends Fragment {
         });
     }
 
+    /**
+     * Applies category and search filters to the full dataset, then paginates
+     * the results based on the selected page size. Updates the RecyclerView
+     * adapter with the current page and refreshes pagination controls.
+     */
     private void applyFilters() {
         List<ArtifactItem> filteredList = new ArrayList<>();
 
@@ -271,6 +303,16 @@ public class RecyclerViewFragment extends Fragment {
         btnNext.setEnabled(currentPage < totalPages);
         textPageIndicator.setText("Page " + currentPage + " of " + totalPages);
     }
+
+    /**
+     * Performs a case-insensitive keyword search across all fields of an
+     * ArtifactItem, including enum display names. Returns true if the keyword
+     * appears in any field.
+     *
+     * @param item  The artifact to search within
+     * @param query The search keyword
+     * @return true if the keyword matches any field, false otherwise
+     */
     private boolean matchesSearchQuery(ArtifactItem item, String query) {
         String lowerQuery = query.toLowerCase().trim();
         if (lowerQuery.isEmpty()) {
@@ -298,6 +340,12 @@ public class RecyclerViewFragment extends Fragment {
         return false;
     }
 
+    /**
+     * Navigates to the expanded detail view for a specific artifact.
+     * Passes the artifact's lot number as a bundle argument.
+     *
+     * @param artifactId The lot number of the artifact to display
+     */
     private void navigateToDetailFragment(String artifactId) {
         Bundle args = new Bundle();
         args.putString("ARTIFACT_NO", artifactId);

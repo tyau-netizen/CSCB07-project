@@ -34,6 +34,7 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.b07demosummer2024.homepage.HomeFragment"
@@ -53,33 +54,54 @@
         <action
             android:id="@+id/action_homeFragment_to_manageItemsFragment"
             app:destination="@id/manageItemsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_savedArtifactsFragment"
+            app:destination="@id/savedArtifactsFragment" />
         <argument
             android:name="username"
             app:argType="string"
             app:nullable="true" />
-        <action
-            android:id="@+id/action_homeFragment_to_savedArtifactsFragment"
-            app:destination="@id/savedArtifactsFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/scrollerFragment"
+        android:name="com.example.b07demosummer2024.misc.ScrollerFragment"
+        android:label="fragment_scroller"
+        tools:layout="@layout/fragment_scroller" />
+
     <fragment
         android:id="@+id/spinnerFragment"
         android:name="com.example.b07demosummer2024.misc.SpinnerFragment"
         android:label="fragment_spinner"
         tools:layout="@layout/fragment_spinner" />
+
     <fragment
         android:id="@+id/manageItemsFragment"
         android:name="com.example.b07demosummer2024.misc.ManageItemsFragment"
-        android:label="fragment_manage_items"
-        tools:layout="@layout/fragment_manage_items" />
+        android:label="Manage Items"
+        tools:layout="@layout/fragment_manage_items">
+        <action
+            android:id="@+id/action_manageItemsFragment_to_addItemFragment"
+            app:destination="@id/addItemFragment"
+            app:popUpTo="@id/manageItemsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_manageItemsFragment_to_deleteItemFragment"
+            app:destination="@id/deleteItemFragment"
+            app:popUpTo="@id/manageItemsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
     <fragment
         android:id="@+id/recyclerViewFragment"
         android:name="com.example.b07demosummer2024.RecyclerViewFragment"
-        android:label="fragment_recycler_view_static"
+        android:label="Artifacts"
         tools:layout="@layout/fragment_recycler_view_static" >
         <action
             android:id="@+id/action_recyclerViewFragment_to_expandedArtifactFragment"
             app:destination="@id/expandedArtifactFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/expandedArtifactFragment"
         android:name="com.example.b07demosummer2024.ExpandedArtifactFragment"
@@ -90,7 +112,14 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
+
+        <action
+            android:id="@+id/action_expandedArtifactFragment_to_editArtifactFragment"
+            app:destination="@id/editArtifactFragment"
+            app:popUpTo="@id/expandedArtifactFragment"
+            app:popUpToInclusive="false" />
     </fragment>
+
     <fragment
         android:id="@+id/savedArtifactsFragment"
         android:name="com.example.b07demosummer2024.savedartifacts.SavedArtifactsFragment"
@@ -100,5 +129,23 @@
             android:id="@+id/action_savedArtifactsFragment_to_expandedArtifactFragment"
             app:destination="@id/expandedArtifactFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/addItemFragment"
+        android:name="com.example.b07demosummer2024.AddItemFragment"
+        android:label="Add Artifact"
+        tools:layout="@layout/fragment_add_item" />
+
+    <fragment
+        android:id="@+id/deleteItemFragment"
+        android:name="com.example.b07demosummer2024.DeleteItemFragment"
+        android:label="Delete Artifact"
+        tools:layout="@layout/fragment_delete_item" />
+
+    <fragment
+        android:id="@+id/editArtifactFragment"
+        android:name="com.example.b07demosummer2024.EditArtifactFragment"
+        android:label="Edit Artifact"
+        tools:layout="@layout/fragment_edit_artifact" />
 
 </navigation>
