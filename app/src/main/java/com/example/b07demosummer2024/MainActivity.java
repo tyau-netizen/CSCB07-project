@@ -21,6 +21,7 @@ import android.view.View;
 import android.content.Intent;
 
 import com.example.b07demosummer2024.databinding.ActivityMainBinding;
+import com.example.b07demosummer2024.user.SessionManager;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private NavController navController;
+    private final SessionManager sessionManager = SessionManager.getInstance();
     FirebaseDatabase db;
 
     @Override
@@ -78,9 +80,20 @@ public class MainActivity extends AppCompatActivity {
             boolean shouldHide = arguments != null
                     && arguments.getBoolean("hideBottomNav", false);
             binding.bottomNavigation.setVisibility(shouldHide ? View.GONE : View.VISIBLE);
+
+            // Show manage artifacts button if user is admin
+            boolean isAdmin = sessionManager.isAdminSession();
+            MenuItem manageArtifactsButton = binding.bottomNavigation.getMenu()
+                    .findItem(R.id.manageItemsFragment);
+            if (manageArtifactsButton != null) {
+                manageArtifactsButton.setVisible(isAdmin);
+            }
+
             // Keep button state synced with current screen
             MenuItem menuItem = binding.bottomNavigation.getMenu().findItem(destination.getId());
-            if (menuItem != null) menuItem.setChecked(true);
+            if (menuItem != null) {
+                menuItem.setChecked(true);
+            }
         });
     }
     @Override
