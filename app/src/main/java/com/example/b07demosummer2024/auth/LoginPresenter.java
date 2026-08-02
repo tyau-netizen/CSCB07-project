@@ -1,11 +1,7 @@
 package com.example.b07demosummer2024.auth;
 
-import android.os.Bundle;
-
 import com.example.b07demosummer2024.base.BasePresenter;
-import com.example.b07demosummer2024.homepage.HomeFragment;
 import com.example.b07demosummer2024.user.SessionManager;
-import com.example.b07demosummer2024.user.User;
 
 public class LoginPresenter extends BasePresenter<LoginContract.View>
         implements LoginContract.Presenter {

@@ -25,9 +25,6 @@
             android:name=".misc.SpinnerFragment"
             android:exported="false" />
         <activity
-            android:name=".RecyclerViewFragment"
-            android:exported="false" />
-        <activity
             android:name=".homepage.HomeFragment"
             android:exported="false" />
         <activity
@@ -42,9 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".auth.AuthActivity"
-            android:exported="false"></activity>
         <activity
             android:name=".auth.MainActivity"
             android:exported="false"

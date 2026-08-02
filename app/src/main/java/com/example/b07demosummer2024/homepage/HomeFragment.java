@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.b07demosummer2024.R;
 import com.example.b07demosummer2024.base.BaseFragment;
-import com.example.b07demosummer2024.databinding.FragmentRecyclerViewBinding;
+import com.example.b07demosummer2024.databinding.FragmentHomeBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +35,7 @@ import com.example.b07demosummer2024.model.Category;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewFragment extends BaseFragment<FragmentRecyclerViewBinding,
+public class HomeFragment extends BaseFragment<FragmentHomeBinding,
         HomeContract.View, HomeContract.Presenter> implements HomeContract.View {
 
 
@@ -79,9 +79,9 @@ public class RecyclerViewFragment extends BaseFragment<FragmentRecyclerViewBindi
 
     @NonNull
     @Override
-    protected FragmentRecyclerViewBinding inflateBinding(@NonNull LayoutInflater inflater,
+    protected FragmentHomeBinding inflateBinding(@NonNull LayoutInflater inflater,
                                                  @Nullable ViewGroup container) {
-        return FragmentRecyclerViewBinding.inflate(inflater, container, false);
+        return FragmentHomeBinding.inflate(inflater, container, false);
     }
 
     @NonNull
@@ -92,12 +92,14 @@ public class RecyclerViewFragment extends BaseFragment<FragmentRecyclerViewBindi
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         sharedPreferences = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        currentPageSize = sharedPreferences.getInt(KEY_PAGE_SIZE, 12); // Load saved pagination choice
+        // Load saved pagination choice
+        currentPageSize = sharedPreferences.getInt(KEY_PAGE_SIZE, 12);
 
         spinnerPageSize = view.findViewById(R.id.spinnerPageSize);
         btnPrevious = view.findViewById(R.id.btnPrevious);
@@ -205,7 +207,8 @@ public class RecyclerViewFragment extends BaseFragment<FragmentRecyclerViewBindi
         });
 
         // Setup RecyclerView Adapter
-        itemAdapter = new ArtifactItemAdapter(itemList, new ArtifactItemAdapter.OnArtifactClickListener() {
+        itemAdapter = new ArtifactItemAdapter(itemList,
+                new ArtifactItemAdapter.OnArtifactClickListener() {
             @Override
             public void onLearnMoreClick(String artifactIdentifier) {
                 navigateToDetailFragment(artifactIdentifier);

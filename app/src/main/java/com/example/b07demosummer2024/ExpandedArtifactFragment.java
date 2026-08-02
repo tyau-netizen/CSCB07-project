@@ -355,7 +355,7 @@ public class ExpandedArtifactFragment extends Fragment {
                 Toast.makeText(getContext(), "Artifact deleted successfully", Toast.LENGTH_SHORT).show();
 
                 // Navigate back to Home Page
-                Navigation.findNavController(requireView()).navigate(R.id.action_expandedArtifactFragment_to_homeFragment);
+                Navigation.findNavController(requireView()).navigate(R.id.action_expandedArtifactFragment_to_recyclerViewFragment);
             } else {
                 String errorMsg = "Unknown error";
                 if (task.getException() != null) {
