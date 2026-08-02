@@ -23,6 +23,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
 import com.example.b07demosummer2024.model.ArtifactItem;
+import com.example.b07demosummer2024.model.Category;
 import com.example.b07demosummer2024.model.DynastyPeriod;
 import com.example.b07demosummer2024.model.Material;
 import com.google.firebase.database.DataSnapshot;

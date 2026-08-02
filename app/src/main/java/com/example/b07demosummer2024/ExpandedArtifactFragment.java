@@ -99,7 +99,7 @@ public class ExpandedArtifactFragment extends Fragment {
         deleteButton.setOnClickListener(v -> showDeleteConfirmationDialog());
 
         // Edit button
-        Button editButton = view.findViewById(R.id.button_edit_artifact);
+        ImageButton editButton = view.findViewById(R.id.button_edit_artifact);
 
         // Admin Check: Only show edit button if current session is Admin
         if (sessionManager.isAdminSession()) {
@@ -113,16 +113,10 @@ public class ExpandedArtifactFragment extends Fragment {
                 Toast.makeText(getContext(), "Artifact still loading, try again in a moment.", Toast.LENGTH_SHORT).show();
                 return;
             }
-
-            EditArtifactFragment editFragment = new EditArtifactFragment(currentArtifactItem);
-
-            if (getActivity() != null) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, editFragment) // EDIT: swap for your actual top-level container id
-                        .addToBackStack(null)
-                        .commit();
-            }
+          Bundle args = new Bundle();
+            args.putString("ARTIFACT_NO", currentArtifactItem.getLotNumber());
+            Navigation.findNavController(requireView())
+                    .navigate(R.id.action_expandedArtifactFragment_to_editArtifactFragment, args);
         });
 
         // Save/unsave artifact
