@@ -18,10 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.example.b07demosummer2024.model.ArtifactItem;
@@ -40,9 +43,14 @@ import java.util.List;
 import java.util.Objects;
 
 
+/**
+ * This is the fragment for the "expanded" view of one artifact - basically the
+ * full detail page you see when you tap into an artifact from the list. Shows
+ * the image, all the info fields, related artifacts, and (if you're an admin)
+ * the edit/delete buttons.
+ */
 public class ExpandedArtifactFragment extends Fragment {
 
-    // --- CLASS VARIABLES ---
     private TextView titleText;
     private TextView descText;
     private ImageButton saveButton;
@@ -52,6 +60,18 @@ public class ExpandedArtifactFragment extends Fragment {
     private List<ArtifactItem> allItemsList;
     private SessionManager sessionManager;
 
+    /**
+     * Sets up the whole page basically - grabs all the views, wires up the
+     * admin-only edit/delete buttons, the save button, and the sort spinner
+     * for related artifacts. Then kicks off the fetch for the artifact data
+     * (using the ARTIFACT_NO passed in through the fragment args, or a
+     * default if none was passed).
+     *
+     * @param inflater used to inflate the fragment's xml layout
+     * @param container the parent view this fragment gets attached to
+     * @param savedInstanceState leftover state from before, if there is any
+     * @return the fully set up View for this fragment
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,17 +85,57 @@ public class ExpandedArtifactFragment extends Fragment {
         artifactImage = view.findViewById(R.id.image_artifact_large);
         relatedContainer = view.findViewById(R.id.container_related_artifacts);
 
+        // Delete button
+        Button deleteButton = view.findViewById(R.id.delete_button);
+
+        // Admin Check: Only show delete button if current session is Admin
+        if (sessionManager.isAdminSession()) {
+            deleteButton.setVisibility(View.VISIBLE);
+        } else {
+            deleteButton.setVisibility(View.GONE);
+        }
+
+        // Set click listener to show confirmation warning
+        deleteButton.setOnClickListener(v -> showDeleteConfirmationDialog());
+
+        // Edit button
+        Button editButton = view.findViewById(R.id.button_edit_artifact);
+
+        // Admin Check: Only show edit button if current session is Admin
+        if (sessionManager.isAdminSession()) {
+            editButton.setVisibility(View.VISIBLE);
+        } else {
+            editButton.setVisibility(View.GONE);
+        }
+
+        editButton.setOnClickListener(v -> {
+            if (currentArtifactItem == null) {
+                Toast.makeText(getContext(), "Artifact still loading, try again in a moment.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            EditArtifactFragment editFragment = new EditArtifactFragment(currentArtifactItem);
+
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, editFragment) // EDIT: swap for your actual top-level container id
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         // Save/unsave artifact
         /* TODO: Make the save button change appearance based on whether artifact is saved or not.
-        *   Note - the following code will tell you if the artifact is saved or not:
-        *   ----------------------------------------------------------------------------------------
-        *       User currentUser = sessionManager.getCurrentUser();
-        *       SavedArtifactsManager artifactsManager = currentUser.getSavedArtifactsManager();
-        *       String lotNumber = currentArtifactItem.getLotNumber();
-        *       boolean artifactIsSaved = artifactsManager.containsArtifact(lotNumber);
-        *   ----------------------------------------------------------------------------------------
-        *   Also check out handleSaveClick() at the bottom of the file it's a cool method
-        *  */
+         *   Note - the following code will tell you if the artifact is saved or not:
+         *   ----------------------------------------------------------------------------------------
+         *       User currentUser = sessionManager.getCurrentUser();
+         *       SavedArtifactsManager artifactsManager = currentUser.getSavedArtifactsManager();
+         *       String lotNumber = currentArtifactItem.getLotNumber();
+         *       boolean artifactIsSaved = artifactsManager.containsArtifact(lotNumber);
+         *   ----------------------------------------------------------------------------------------
+         *   Also check out handleSaveClick() at the bottom of the file it's a cool method
+         *  */
         saveButton.setOnClickListener(v -> handleSaveClick());
 
 
@@ -289,7 +349,40 @@ public class ExpandedArtifactFragment extends Fragment {
             });
         }
     }
+  
+    // Displays a confirmation warning dialog before deleting an artifact.
+    private void showDeleteConfirmationDialog() {
+        new AlertDialog.Builder(requireContext()).setTitle("Delete Artifact")
+                .setMessage("Are you sure you want to delete this artifact? This action cannot be undone.").setPositiveButton("Delete", (dialog, which) -> deleteArtifactFromDatabase())
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()).show();
+    }
+  
+    // Removes the artifact from Firebase Realtime Database and navigates back to Home.
+    private void deleteArtifactFromDatabase() {
+        if (currentArtifactItem == null || currentArtifactItem.getLotNumber() == null) {
+            Toast.makeText(getContext(), "Cannot delete: Artifact details missing", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        String artifactId = currentArtifactItem.getLotNumber();
+        DatabaseReference artifactRef = FirebaseDatabase.getInstance("https://taam-100-default-rtdb.firebaseio.com/").getReference("artifacts").child(artifactId);
+
+        // Delete node from Firebase
+        artifactRef.removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(getContext(), "Artifact deleted successfully", Toast.LENGTH_SHORT).show();
+
+                // Navigate back to Home Page
+                Navigation.findNavController(requireView()).navigate(R.id.action_expandedArtifactFragment_to_homeFragment);
+            } else {
+                String errorMsg = "Unknown error";
+                if (task.getException() != null) {
+                    errorMsg = task.getException().getMessage();
+                }
+                Toast.makeText(getContext(), "Failed to delete: " + errorMsg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     private void handleSaveClick() {
         User currentUser = sessionManager.getCurrentUser();
         SavedArtifactsManager artifactsManager = currentUser.getSavedArtifactsManager();

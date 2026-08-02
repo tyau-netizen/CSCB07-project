@@ -18,7 +18,7 @@ import com.example.b07demosummer2024.R;
 
 import java.util.List;
 
-public class ArtifactItemAdapter extends RecyclerView.Adapter<ArtifactItemAdapter.ItemViewHolder> {
+public class    ArtifactItemAdapter extends RecyclerView.Adapter<ArtifactItemAdapter.ItemViewHolder> {
     private List<ArtifactItem> itemList;
     private OnArtifactClickListener clickListener;
 

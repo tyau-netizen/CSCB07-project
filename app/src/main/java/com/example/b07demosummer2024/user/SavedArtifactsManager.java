@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SavedArtifactsManager {
+    // Note - artifacts should always be kept sorted by its values
     private final Map<String, String> artifacts;
 
     public SavedArtifactsManager() {
@@ -14,16 +16,17 @@ public class SavedArtifactsManager {
 
     public SavedArtifactsManager(Map<String, String> rawMap) {
         if (rawMap != null) {
-            this.artifacts = new LinkedHashMap<>(rawMap);
+            this.artifacts = sortByOrderingString(rawMap);
         } else {
             this.artifacts = new LinkedHashMap<>();
         }
     }
 
     public String add(String artifactId) {
-        String lastKey = getLastOrderKey();
-        String newKey = FractionalIndex.generateKeyBetween(lastKey, null);
+        String firstKey = getFirstOrderKey();
+        String newKey = FractionalIndex.generateKeyBetween(null, firstKey);
         artifacts.put(artifactId, newKey);
+        sortArtifacts();
         return newKey;
     }
 
@@ -37,6 +40,8 @@ public class SavedArtifactsManager {
 
         String newKey = FractionalIndex.generateKeyBetween(prevKey, nextKey);
         artifacts.put(targetId, newKey);
+        sortArtifacts();
+
         return newKey;
     }
 
@@ -48,9 +53,32 @@ public class SavedArtifactsManager {
         return artifacts.containsKey(artifactId);
     }
 
+    private String getFirstOrderKey() {
+        if (artifacts.isEmpty()) return null;
+        List<String> keys = new ArrayList<>(artifacts.values());
+        return keys.get(0);
+    }
     private String getLastOrderKey() {
         if (artifacts.isEmpty()) return null;
         List<String> keys = new ArrayList<>(artifacts.values());
         return keys.get(keys.size() - 1);
+    }
+
+    private void sortArtifacts() {
+        Map<String, String> sortedMap = sortByOrderingString(artifacts);
+        artifacts.clear();
+        artifacts.putAll(sortedMap);
+    }
+
+    private LinkedHashMap<String, String> sortByOrderingString(Map<String, String> map) {
+        return map.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
     }
 }

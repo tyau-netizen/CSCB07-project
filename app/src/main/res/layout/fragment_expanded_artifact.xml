@@ -47,6 +47,18 @@
                     android:textSize="32sp"
                     android:textAllCaps="true" />
 
+                <!-- Admin Only -->
+                <ImageButton
+                    android:id="@+id/button_edit_artifact"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerInside"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:visibility="gone"
+                    app:tint="#B09867" />
+
                 <ImageButton
                     android:id="@+id/button_save_artifact"
                     android:layout_width="48dp"
@@ -74,6 +86,14 @@
                 tools:text="The Toronto Asian Art Museum (TAAM) envisions becoming a vibrant community hub where people of all backgrounds can engage with the richness and diversity of Asian art, culture, and history. We strive to foster understanding, appreciation, and dialogue through accessible exhibitions, educational programs, and hands-on experiences rooted in heritage."
                 android:textColor="#7A7A7A"
                 android:textSize="16sp" />
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Delete Artifact"
+                android:backgroundTint="#D32F2F"
+                android:textColor="#FFFFFF" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -6,6 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.AdapterView;
 import androidx.annotation.NonNull;
@@ -45,7 +49,18 @@ public class RecyclerViewFragment extends Fragment {
     private Spinner spinnerCategory;
 
     private FirebaseDatabase db;
+    private static final String PREFS_NAME = "ArtifactAppPrefs";
+    private static final String KEY_PAGE_SIZE = "selected_page_size";
 
+    // Pagination state
+    private int currentPageSize = 12;
+    private int currentPage = 1;
+
+    private Spinner spinnerPageSize;
+    private Button btnPrevious;
+    private Button btnNext;
+    private TextView textPageIndicator;
+    private SharedPreferences sharedPreferences;
     private static final String ALL_ARTIFACTS_LABEL = "All Artifacts";
 
     @Nullable
@@ -54,7 +69,13 @@ public class RecyclerViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        sharedPreferences = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        currentPageSize = sharedPreferences.getInt(KEY_PAGE_SIZE, 12); // Load saved pagination choice
 
+        spinnerPageSize = view.findViewById(R.id.spinnerPageSize);
+        btnPrevious = view.findViewById(R.id.btnPrevious);
+        btnNext = view.findViewById(R.id.btnNext);
+        textPageIndicator = view.findViewById(R.id.textPageIndicator);
         searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -66,6 +87,7 @@ public class RecyclerViewFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 currentSearchQuery = newText;
+                currentPage = 1;
                 applyFilters();
                 return true;
             }
@@ -79,6 +101,58 @@ public class RecyclerViewFragment extends Fragment {
         for (Category c : categories) {
             displayNames.add(c.getDisplayName());
         }
+        // Page Size Spinner Setup
+        List<String> pageSizeOptions = new ArrayList<>();
+        pageSizeOptions.add("12 per page");
+        pageSizeOptions.add("24 per page");
+        pageSizeOptions.add("All per page");
+
+        ArrayAdapter<String> pageSizeAdapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, pageSizeOptions);
+        pageSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPageSize.setAdapter(pageSizeAdapter);
+
+        // Set default dropdown position
+        if (currentPageSize == 12) {
+            spinnerPageSize.setSelection(0);
+        } else if (currentPageSize == 24) {
+            spinnerPageSize.setSelection(1);
+        } else {
+            spinnerPageSize.setSelection(2);
+        }
+
+        spinnerPageSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    currentPageSize = 12;
+                } else if (position == 1) {
+                    currentPageSize = 24;
+                } else {
+                    currentPageSize = 0; // 0 = All
+                }
+
+                // Save selected option to SharedPreferences
+                sharedPreferences.edit().putInt(KEY_PAGE_SIZE, currentPageSize).apply();
+                currentPage = 1;
+                applyFilters();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        btnPrevious.setOnClickListener(v -> {
+            if (currentPage > 1) {
+                currentPage--;
+                applyFilters();
+            }
+        });
+
+        btnNext.setOnClickListener(v -> {
+            currentPage++;
+            applyFilters();
+        });
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item, displayNames);
@@ -93,6 +167,7 @@ public class RecyclerViewFragment extends Fragment {
                 } else {
                     currentCategoryFilter = categories[position - 1].getDisplayName();
                 }
+                currentPage = 1;
                 applyFilters();
             }
 
@@ -166,7 +241,35 @@ public class RecyclerViewFragment extends Fragment {
             filteredList.add(item);
         }
 
-        itemAdapter.updateList(filteredList);
+        // Calculate pagination
+        int totalItems = filteredList.size();
+        int totalPages;
+
+        if (currentPageSize == 0 || totalItems == 0) {
+            totalPages = 1;
+            currentPage = 1;
+        } else {
+            totalPages = (int) Math.ceil((double) totalItems / currentPageSize);
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+        }
+
+        List<ArtifactItem> pageList;
+        if (currentPageSize == 0 || totalItems == 0) {
+            pageList = filteredList;
+        } else {
+            int startIndex = (currentPage - 1) * currentPageSize;
+            int endIndex = Math.min(startIndex + currentPageSize, totalItems);
+            pageList = filteredList.subList(startIndex, endIndex);
+        }
+
+        // Update adapter with current page list
+        itemAdapter.updateList(pageList);
+
+        // Update button states & page indicator text
+        btnPrevious.setEnabled(currentPage > 1);
+        btnNext.setEnabled(currentPage < totalPages);
+        textPageIndicator.setText("Page " + currentPage + " of " + totalPages);
     }
     private boolean matchesSearchQuery(ArtifactItem item, String query) {
         String lowerQuery = query.toLowerCase().trim();

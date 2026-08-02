@@ -1,18 +1,16 @@
 package com.example.b07demosummer2024.auth;
 
-import android.os.Bundle;
-
 import com.example.b07demosummer2024.base.BaseContract;
 
-public interface LoginContract {
+public interface RegisterContract {
 
     interface View extends BaseContract.View {
-        void navigateToRegister();
+        void navigateToLogin();
         void navigateToHome(boolean isGuest);
     }
 
     interface Presenter extends BaseContract.Presenter<View> {
-        void handleLogin(String email, String password);
-        void handleRegisterClick();
+        void handleRegister(String username, String email, String password);
+        void handleLoginClick();
     }
 }

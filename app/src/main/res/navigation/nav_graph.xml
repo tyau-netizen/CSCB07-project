@@ -49,9 +49,6 @@
             android:id="@+id/action_homeFragment_to_recyclerViewFragment"
             app:destination="@id/recyclerViewFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_scrollerFragment"
-            app:destination="@id/scrollerFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_spinnerFragment"
             app:destination="@id/spinnerFragment" />
         <action
@@ -61,6 +58,9 @@
             android:name="username"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_homeFragment_to_savedArtifactsFragment"
+            app:destination="@id/savedArtifactsFragment" />
     </fragment>
 
     <fragment
@@ -68,8 +68,6 @@
         android:name="com.example.b07demosummer2024.misc.ScrollerFragment"
         android:label="fragment_scroller"
         tools:layout="@layout/fragment_scroller" />
-
-    <fragment
         android:id="@+id/spinnerFragment"
         android:name="com.example.b07demosummer2024.misc.SpinnerFragment"
         android:label="fragment_spinner"
@@ -111,7 +109,22 @@
         android:id="@+id/expandedArtifactFragment"
         android:name="com.example.b07demosummer2024.ExpandedArtifactFragment"
         android:label="Artifact Details"
-        tools:layout="@layout/fragment_expanded_artifact" />
+        tools:layout="@layout/fragment_expanded_artifact" >
+        <action
+            android:id="@+id/action_expandedArtifactFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedArtifactsFragment"
+        android:name="com.example.b07demosummer2024.savedartifacts.SavedArtifactsFragment"
+        android:label="fragment_saved_artifacts"
+        tools:layout="@layout/fragment_saved_artifacts" >
+        <action
+            android:id="@+id/action_savedArtifactsFragment_to_expandedArtifactFragment"
+            app:destination="@id/expandedArtifactFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/addItemFragment"

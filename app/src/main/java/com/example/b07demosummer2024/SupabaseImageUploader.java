@@ -25,9 +25,32 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/**
+ * Handles uploading artifact images to Supabase Storage. Basically you give
+ * it a local image Uri and a lot number, it uploads the file to the bucket,
+ * and hands you back a public URL you can stick straight into Firebase /
+ * load with Glide.
+ */
 public class SupabaseImageUploader {
+    /**
+     * Callback for finding out how the upload went, since the actual upload
+     * happens on a background thread (comes back on the main thread though
+     * so it's safe to touch UI in here).
+     */
     public interface UploadCallback {
+        /**
+         * Called when the image uploaded successfully.
+         *
+         * @param publicUrl the public URL of the uploaded image in Supabase
+         */
         void onSuccess(String publicUrl);
+
+        /**
+         * Called when something went wrong with the upload (bad config,
+         * network failure, wrong file type, too big, etc).
+         *
+         * @param message a human readable reason for why it failed
+         */
         void onError(String message);
     }
 
@@ -40,6 +63,13 @@ public class SupabaseImageUploader {
     private final String supabaseAnonKey;
     private final String bucketName;
 
+    /**
+     * Sets up the uploader with whatever Supabase project URL, anon key, and
+     * bucket name are defined in the string resources. Uses the app context
+     * so this doesn't leak an Activity/Fragment.
+     *
+     * @param context any context, gets swapped for the application context internally
+     */
     public SupabaseImageUploader(Context context) {
         appContext = context.getApplicationContext();
         supabaseUrl = appContext.getString(R.string.supabase_url).trim();
@@ -47,6 +77,16 @@ public class SupabaseImageUploader {
         bucketName = appContext.getString(R.string.supabase_image_bucket).trim();
     }
 
+    /**
+     * Uploads the image at the given Uri to Supabase Storage under a path
+     * based on the lot number, then reports back through the callback. Does
+     * a bunch of validation first (i.e. config present, actually an image, under
+     * the size limit) before it even tries the network call.
+     *
+     * @param imageUri the local Uri of the image to upload (from the gallery picker)
+     * @param lotNumber the artifact's lot number, used to build the storage path
+     * @param callback called with the public URL on success, or an error message on failure
+     */
     public void uploadImage(Uri imageUri, String lotNumber, UploadCallback callback) {
         // Make sure the Supabase project URL, anon key, and bucket name were provided
         if (isBlank(supabaseUrl) || isBlank(supabaseAnonKey) || isBlank(bucketName)) {
