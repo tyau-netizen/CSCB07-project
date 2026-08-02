@@ -114,28 +114,10 @@ public class ExpandedArtifactFragment extends Fragment {
                 return;
             }
 
-            EditArtifactFragment editFragment = new EditArtifactFragment(currentArtifactItem);
-
-            if (getActivity() != null) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, editFragment) // EDIT: swap for your actual top-level container id
-                        .addToBackStack(null)
-                        .commit();
-            }
+            Navigation.findNavController(requireView())
+                    .navigate(R.id.action_expandedArtifactFragment_to_editArtifactFragment);
         });
 
-        // Save/unsave artifact
-        /* TODO: Make the save button change appearance based on whether artifact is saved or not.
-         *   Note - the following code will tell you if the artifact is saved or not:
-         *   ----------------------------------------------------------------------------------------
-         *       User currentUser = sessionManager.getCurrentUser();
-         *       SavedArtifactsManager artifactsManager = currentUser.getSavedArtifactsManager();
-         *       String lotNumber = currentArtifactItem.getLotNumber();
-         *       boolean artifactIsSaved = artifactsManager.containsArtifact(lotNumber);
-         *   ----------------------------------------------------------------------------------------
-         *   Also check out handleSaveClick() at the bottom of the file it's a cool method
-         *  */
         saveButton.setOnClickListener(v -> handleSaveClick());
 
 

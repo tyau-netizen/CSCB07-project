@@ -90,6 +90,9 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_expandedArtifactFragment_to_editArtifactFragment"
+            app:destination="@id/editArtifactFragment" />
     </fragment>
     <fragment
         android:id="@+id/savedArtifactsFragment"
@@ -100,5 +103,9 @@
             android:id="@+id/action_savedArtifactsFragment_to_expandedArtifactFragment"
             app:destination="@id/expandedArtifactFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editArtifactFragment"
+        android:name="com.example.b07demosummer2024.EditArtifactFragment"
+        android:label="fragment_edit_artifact"></fragment>
 
 </navigation>
