@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.widget.ActionMenuView;
 import android.widget.Button;
@@ -39,12 +40,18 @@ public class MainActivity extends AppCompatActivity {
 
         if (navHostFragment != null) {
             navController = navHostFragment.getNavController();
+
+            NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
+
+            navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+                boolean shouldHide = arguments != null && arguments.getBoolean("hideBottomNav", false);
+                binding.bottomNavigation.setVisibility(shouldHide ? View.GONE : View.VISIBLE);
+            });
         }
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
         DatabaseReference myRef = db.getReference("testDemo");
 
-//        myRef.setValue("B07 Demo!");
         myRef.child("movies").setValue("B07 Demo!");
     }
 
