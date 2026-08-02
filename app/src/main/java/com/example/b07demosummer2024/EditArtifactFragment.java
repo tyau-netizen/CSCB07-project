@@ -1,6 +1,5 @@
 package com.example.b07demosummer2024;
 
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,6 +29,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+/**
+ * This is the fragment for editing an artifact - basically the form page you
+ * land on when an admin hits "edit" on an artifact. Pre-fills all the fields
+ * with the current artifact's data, lets you swap the image out (uploads to
+ * Supabase), and pushes whatever changes you made back to Firebase when you
+ * hit save.
+ */
 public class EditArtifactFragment extends Fragment {
 
     private ArtifactItem currentArtifact;
@@ -45,14 +51,33 @@ public class EditArtifactFragment extends Fragment {
     private SupabaseImageUploader imageUploader;
     private ActivityResultLauncher<String> pickImageLauncher;
 
+    /**
+     * Use this constructor when you already have the artifact you want to edit
+     * (like when navigating here from the expanded artifact page).
+     *
+     * @param artifact the artifact whose info should be loaded into the form
+     */
     public EditArtifactFragment(ArtifactItem artifact) {
         this.currentArtifact = artifact;
     }
 
+    /**
+     * Empty constructor, Android needs this one to recreate the fragment on
+     * its own (like after a config change). Doesn't set up currentArtifact,
+     * so don't rely on this one if you actually need the artifact data.
+     */
     public EditArtifactFragment() {
         // Required empty constructor
     }
 
+    /**
+     * Sets up the Supabase image uploader and registers the gallery picker
+     * launcher. Has to happen here (before onCreateView/onViewCreated) since
+     * activity result launchers need to be registered early in the fragment
+     * lifecycle or Android throws a fit.
+     *
+     * @param savedInstanceState leftover state from before, if there is any
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,12 +95,30 @@ public class EditArtifactFragment extends Fragment {
         );
     }
 
+    /**
+     * Just inflates the edit artifact layout, all the actual setup happens
+     * in onViewCreated once the views exist.
+     *
+     * @param inflater           used to inflate the fragment's xml layout
+     * @param container          the parent view this fragment gets attached to
+     * @param savedInstanceState leftover state from before, if there is any
+     * @return the inflated (but not yet set up) View for this fragment
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_edit_artifact, container, false);
     }
 
+    /**
+     * This is where the real setup happens - grabs all the view references,
+     * fills in the category/material/dynasty spinners, pre-fills every field
+     * with the current artifact's data (if there is one), and wires up the
+     * change-image and save buttons.
+     *
+     * @param view               the View returned from onCreateView
+     * @param savedInstanceState leftover state from before, if there is any
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
