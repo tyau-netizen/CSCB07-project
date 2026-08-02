@@ -81,17 +81,44 @@ public class ExpandedArtifactFragment extends Fragment {
         // Set click listener to show confirmation warning
         deleteButton.setOnClickListener(v -> showDeleteConfirmationDialog());
 
+        // Edit button
+        Button editButton = view.findViewById(R.id.button_edit_artifact);
+
+        // Admin Check: Only show edit button if current session is Admin
+        if (sessionManager.isAdminSession()) {
+            editButton.setVisibility(View.VISIBLE);
+        } else {
+            editButton.setVisibility(View.GONE);
+        }
+
+        editButton.setOnClickListener(v -> {
+            if (currentArtifactItem == null) {
+                Toast.makeText(getContext(), "Artifact still loading, try again in a moment.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            EditArtifactFragment editFragment = new EditArtifactFragment(currentArtifactItem);
+
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, editFragment) // EDIT: swap for your actual top-level container id
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         // Save/unsave artifact
         /* TODO: Make the save button change appearance based on whether artifact is saved or not.
-        *   Note - the following code will tell you if the artifact is saved or not:
-        *   ----------------------------------------------------------------------------------------
-        *       User currentUser = sessionManager.getCurrentUser();
-        *       SavedArtifactsManager artifactsManager = currentUser.getSavedArtifactsManager();
-        *       String lotNumber = currentArtifactItem.getLotNumber();
-        *       boolean artifactIsSaved = artifactsManager.containsArtifact(lotNumber);
-        *   ----------------------------------------------------------------------------------------
-        *   Also check out handleSaveClick() at the bottom of the file it's a cool method
-        *  */
+         *   Note - the following code will tell you if the artifact is saved or not:
+         *   ----------------------------------------------------------------------------------------
+         *       User currentUser = sessionManager.getCurrentUser();
+         *       SavedArtifactsManager artifactsManager = currentUser.getSavedArtifactsManager();
+         *       String lotNumber = currentArtifactItem.getLotNumber();
+         *       boolean artifactIsSaved = artifactsManager.containsArtifact(lotNumber);
+         *   ----------------------------------------------------------------------------------------
+         *   Also check out handleSaveClick() at the bottom of the file it's a cool method
+         *  */
         saveButton.setOnClickListener(v -> handleSaveClick());
 
 
@@ -305,14 +332,15 @@ public class ExpandedArtifactFragment extends Fragment {
             });
         }
     }
-     // Displays a confirmation warning dialog before deleting an artifact.
-
+  
+    // Displays a confirmation warning dialog before deleting an artifact.
     private void showDeleteConfirmationDialog() {
         new AlertDialog.Builder(requireContext()).setTitle("Delete Artifact")
                 .setMessage("Are you sure you want to delete this artifact? This action cannot be undone.").setPositiveButton("Delete", (dialog, which) -> deleteArtifactFromDatabase())
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()).show();
     }
-     // Removes the artifact from Firebase Realtime Database and navigates back to Home.
+  
+    // Removes the artifact from Firebase Realtime Database and navigates back to Home.
     private void deleteArtifactFromDatabase() {
         if (currentArtifactItem == null || currentArtifactItem.getLotNumber() == null) {
             Toast.makeText(getContext(), "Cannot delete: Artifact details missing", Toast.LENGTH_SHORT).show();

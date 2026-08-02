@@ -1,4 +1,4 @@
-package com.example.yourpackage;
+package com.example.b07demosummer2024;
 
 import android.content.ContentResolver;
 import android.content.Context;
