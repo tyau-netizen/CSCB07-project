@@ -388,7 +388,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding,
         Bundle args = new Bundle();
         args.putString("ARTIFACT_NO", artifactId);
         NavController navController = NavHostFragment.findNavController(this);
-        navController.navigate(R.id.action_recyclerViewFragment_to_expandedArtifactFragment, args);
+        navController.navigate(R.id.action_homeFragment_to_expandedArtifactFragment, args);
     }
 
     @Override
