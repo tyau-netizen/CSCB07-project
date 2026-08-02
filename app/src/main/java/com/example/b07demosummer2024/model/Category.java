@@ -38,4 +38,13 @@ public enum Category {
     public String toString() {
         return displayName;
     }
+
+    public static Category fromDisplayName(String displayName) {
+        for (Category c : Category.values()) {
+            if (c.getDisplayName().equalsIgnoreCase(displayName)) {
+                return c;
+            }
+        }
+        return null; // Return null if no match found
+    }
 }

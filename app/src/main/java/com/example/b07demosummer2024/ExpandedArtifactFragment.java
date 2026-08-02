@@ -113,9 +113,10 @@ public class ExpandedArtifactFragment extends Fragment {
                 Toast.makeText(getContext(), "Artifact still loading, try again in a moment.", Toast.LENGTH_SHORT).show();
                 return;
             }
-
+          Bundle args = new Bundle();
+            args.putString("ARTIFACT_NO", currentArtifactItem.getLotNumber());
             Navigation.findNavController(requireView())
-                    .navigate(R.id.action_expandedArtifactFragment_to_editArtifactFragment);
+                    .navigate(R.id.action_expandedArtifactFragment_to_editArtifactFragment, args);
         });
 
         saveButton.setOnClickListener(v -> handleSaveClick());

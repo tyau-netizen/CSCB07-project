@@ -30,4 +30,13 @@ public enum Material {
     public String toString() {
         return displayName;
     }
+
+    public static Material fromDisplayName(String displayName) {
+        for (Material c : Material.values()) {
+            if (c.getDisplayName().equalsIgnoreCase(displayName)) {
+                return c;
+            }
+        }
+        return null; // Return null if no match found
+    }
 }
