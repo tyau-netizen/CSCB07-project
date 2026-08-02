@@ -12,38 +12,35 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.b07demosummer2024.R;
+import com.example.b07demosummer2024.base.BaseFragment;
 import com.example.b07demosummer2024.databinding.FragmentLoginBinding;
+import com.example.b07demosummer2024.homepage.HomeFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Handles user login input and validation
  */
-public class LoginFragment extends Fragment implements LoginContract.View {
-
-    private FragmentLoginBinding binding;
-    private LoginContract.Presenter presenter;
+public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginContract.View,
+        LoginContract.Presenter> implements LoginContract.View {
 
     public LoginFragment() {}
 
+    @NonNull
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected FragmentLoginBinding inflateBinding(@NonNull LayoutInflater inflater,
+                                                  @Nullable ViewGroup container) {
+        return FragmentLoginBinding.inflate(inflater, container, false);
     }
 
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate fragment layout using ViewBinding
-        binding = FragmentLoginBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+    protected LoginPresenter createPresenter() {
+        return new LoginPresenter();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Initialize the presenter
-        presenter = new LoginPresenter(this);
 
         // Click listeners
         binding.loginButton.setOnClickListener(v -> {
@@ -60,30 +57,15 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void displayToastMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void navigateToRegister() {
         Navigation.findNavController(requireView()).navigate(
                 R.id.action_loginFragment_to_registerFragment);
     }
 
     @Override
-    public void navigateToHome() {
-        // TODO: Actually navigate to the homepage
-        displayToastMessage("navigating to home...");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        // Clean up binding to prevent memory leaks
-        binding = null;
-        if (presenter != null) {
-            presenter.onDestroy();
-            presenter = null;
-        }
+    public void navigateToHome(boolean isGuest) {
+        Bundle args = HomeFragment.packWelcomeBundle(false);
+        Navigation.findNavController(requireView())
+                .navigate(R.id.action_loginFragment_to_homeFragment, args);
     }
 }

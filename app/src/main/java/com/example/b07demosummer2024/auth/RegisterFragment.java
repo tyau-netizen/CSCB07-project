@@ -1,69 +1,64 @@
 package com.example.b07demosummer2024.auth;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-import androidx.fragment.app.FragmentTransaction;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 
-import com.google.firebase.auth.FirebaseAuth;
-
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-
 import com.example.b07demosummer2024.R;
+import com.example.b07demosummer2024.base.BaseFragment;
+import com.example.b07demosummer2024.databinding.FragmentRegisterBinding;
+import com.example.b07demosummer2024.homepage.HomeFragment;
 
-/**
- * Fragment that handles new user registration.
- * Allows users to create an account using email and password via Firebase Auth.
- */
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, RegisterContract.View,
+        RegisterContract.Presenter> implements RegisterContract.View {
 
-    public RegisterFragment() {
-        // Required empty public constructor
+    public RegisterFragment() {}
+
+    @NonNull
+    @Override
+    protected FragmentRegisterBinding inflateBinding(@NonNull LayoutInflater inflater,
+                                                     @Nullable ViewGroup container) {
+        return FragmentRegisterBinding.inflate(inflater, container, false);
+    }
+
+    @NonNull
+    @Override
+    protected RegisterPresenter createPresenter() {
+        return new RegisterPresenter();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_register, container, false);
-        // Get references to UI elements
-        EditText emailField = view.findViewById(R.id.login_email_input);
-        EditText passwordField = view.findViewById(R.id.login_password_input);
-        Button registerButton = view.findViewById(R.id.registerButton);
-        TextView loginText = view.findViewById(R.id.textViewLogin);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        // Handle register button click
-        registerButton.setOnClickListener(v -> {
-            String email = emailField.getText().toString().trim();
-            String password = passwordField.getText().toString().trim();
-            // Validate fields arent empty
+        binding.registerButton.setOnClickListener(v -> {
+            String username = binding.registerUsernameInput.getText().toString().trim();
+            String email = binding.loginEmailInput.getText().toString().trim();
+            String password = binding.loginPasswordInput.getText().toString();
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(getContext(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            // Create acc with Firebase Auth
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Account created!", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
+            presenter.handleRegister(username, email, password);
         });
-        // Navigate back to login screen when "Already have an account?" is clicked
-        loginText.setOnClickListener(v -> {
-            Navigation.findNavController(requireView()).navigate(
-                    R.id.action_registerFragment_to_loginFragment);
+
+        binding.textViewLogin.setOnClickListener(v -> {
+            presenter.handleLoginClick();
         });
-        return view;
+    }
+
+    @Override
+    public void navigateToLogin() {
+        Navigation.findNavController(requireView()).navigate(
+                R.id.action_registerFragment_to_loginFragment);
+    }
+
+    @Override
+    public void navigateToHome(boolean isGuest) {
+        Bundle args = HomeFragment.packWelcomeBundle(isGuest);
+        Navigation.findNavController(requireView()).navigate(
+                R.id.action_registerFragment_to_homeFragment, args);
     }
 }

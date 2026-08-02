@@ -1,4 +1,4 @@
-package com.example.b07demosummer2024;
+package com.example.b07demosummer2024.misc;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.b07demosummer2024.AddItemFragment;
+import com.example.b07demosummer2024.DeleteItemFragment;
+import com.example.b07demosummer2024.R;
 
 public class ManageItemsFragment extends Fragment {
     @Nullable
@@ -36,7 +40,7 @@ public class ManageItemsFragment extends Fragment {
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.nav_host_fragment, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

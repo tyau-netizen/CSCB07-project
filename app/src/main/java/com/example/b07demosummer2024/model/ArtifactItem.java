@@ -9,7 +9,7 @@ import java.util.Locale;
                                         dynastyPeriod.
  * Everything else is optional and may be null/empty.
  */
-public class ArtifactItem {
+public class ArtifactItem { 
 
     // ---- Mandatory fields ----
     private String lotNumber;          // unique identifier
@@ -209,3 +209,4 @@ public class ArtifactItem {
         return field != null && field.toLowerCase(Locale.getDefault()).contains(query);
     }
 }
+

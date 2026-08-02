@@ -332,13 +332,14 @@ public class ExpandedArtifactFragment extends Fragment {
             });
         }
     }
+  
     // Displays a confirmation warning dialog before deleting an artifact.
-
     private void showDeleteConfirmationDialog() {
         new AlertDialog.Builder(requireContext()).setTitle("Delete Artifact")
                 .setMessage("Are you sure you want to delete this artifact? This action cannot be undone.").setPositiveButton("Delete", (dialog, which) -> deleteArtifactFromDatabase())
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()).show();
     }
+  
     // Removes the artifact from Firebase Realtime Database and navigates back to Home.
     private void deleteArtifactFromDatabase() {
         if (currentArtifactItem == null || currentArtifactItem.getLotNumber() == null) {

@@ -37,7 +37,7 @@ public class RecyclerViewStaticFragment extends Fragment {
         itemList = new ArrayList<>();
         loadStaticItems();
 
-        itemAdapter = new ArtifactItemAdapter(itemList);
+        itemAdapter = new ArtifactItemAdapter(itemList, null);
         recyclerView.setAdapter(itemAdapter);
         return view;
     }
