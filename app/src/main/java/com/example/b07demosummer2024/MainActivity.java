@@ -10,9 +10,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.view.MenuItem;
 import android.widget.ActionMenuView;
 import android.widget.Button;
 import android.view.View;
@@ -41,12 +43,7 @@ public class MainActivity extends AppCompatActivity {
         if (navHostFragment != null) {
             navController = navHostFragment.getNavController();
 
-            NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
-
-            navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-                boolean shouldHide = arguments != null && arguments.getBoolean("hideBottomNav", false);
-                binding.bottomNavigation.setVisibility(shouldHide ? View.GONE : View.VISIBLE);
-            });
+            setupBottomNavMenu();
         }
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
@@ -55,6 +52,37 @@ public class MainActivity extends AppCompatActivity {
         myRef.child("movies").setValue("B07 Demo!");
     }
 
+    private void setupBottomNavMenu() {
+        // Set up navigation on menu item click
+        binding.bottomNavigation.setOnItemSelectedListener(item -> {
+            int destinationId = item.getItemId();
+
+            // Do nothing if attempting to navigate to current fragment
+            if (navController.getCurrentDestination() != null
+                    && navController.getCurrentDestination().getId() == destinationId) {
+                return true;
+            }
+
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .setPopUpTo(R.id.homeFragment, false)
+                    .build();
+
+            navController.navigate(destinationId, null, navOptions);
+            return true;
+        });
+
+        navController.addOnDestinationChangedListener(
+                (controller,destination, arguments) -> {
+            // Check if nav menu should be shown in current fragment
+            boolean shouldHide = arguments != null
+                    && arguments.getBoolean("hideBottomNav", false);
+            binding.bottomNavigation.setVisibility(shouldHide ? View.GONE : View.VISIBLE);
+            // Keep button state synced with current screen
+            MenuItem menuItem = binding.bottomNavigation.getMenu().findItem(destination.getId());
+            if (menuItem != null) menuItem.setChecked(true);
+        });
+    }
     @Override
     public boolean onSupportNavigateUp() {
         return navController != null && navController.navigateUp() || super.onSupportNavigateUp();

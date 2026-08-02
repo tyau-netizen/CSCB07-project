@@ -15,10 +15,9 @@ public class HomePresenter extends BasePresenter<HomeContract.View>
 
     @Override
     public void handleInitialArguments(Bundle args) {
-        if (args == null) {
-            return;
-        } else if (args.containsKey(HomeFragment.KEY_WELCOME_USER)) {
+        if (args.containsKey(HomeFragment.KEY_WELCOME_USER)) {
             unpackWelcomeBundle(args.getBundle(HomeFragment.KEY_WELCOME_USER));
+            args.remove(HomeFragment.KEY_WELCOME_USER);
         }
     }
 
