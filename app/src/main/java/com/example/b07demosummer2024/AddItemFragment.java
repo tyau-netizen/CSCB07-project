@@ -71,6 +71,7 @@ public class AddItemFragment extends Fragment {
 
     // Firebase
     private Button buttonAdd;
+    private Button buttonCancel;
     private FirebaseDatabase db;
     private DatabaseReference artifactsRef;
 
@@ -132,6 +133,8 @@ public class AddItemFragment extends Fragment {
         spinnerDynasty = view.findViewById(R.id.spinnerDynasty);
 
         buttonAdd = view.findViewById(R.id.buttonAdd);
+        buttonCancel = view.findViewById(R.id.buttonCancel);
+
 
         // Initialize Firebase
         db = FirebaseDatabase.getInstance("https://taam-100-default-rtdb.firebaseio.com/");
@@ -160,6 +163,9 @@ public class AddItemFragment extends Fragment {
 
         // Add Button
         buttonAdd.setOnClickListener(v -> addArtifact());
+        // Cancel Button
+        buttonCancel.setOnClickListener(v -> navigateBackToList());
+
 
         return view;
     }
