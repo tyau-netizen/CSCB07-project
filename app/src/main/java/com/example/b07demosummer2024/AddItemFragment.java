@@ -25,6 +25,7 @@ import com.example.b07demosummer2024.model.ArtifactItem;
 import com.example.b07demosummer2024.model.Category;
 import com.example.b07demosummer2024.model.DynastyPeriod;
 import com.example.b07demosummer2024.model.Material;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -112,6 +113,7 @@ public class AddItemFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_item, container, false);
 
+        MaterialToolbar toolbar = view.findViewById(R.id.toolbar_add_artifact);
         // Initialize all fields
         editTextLotNumber = view.findViewById(R.id.editTextLotNumber);
         editTextName = view.findViewById(R.id.editTextName);
@@ -165,6 +167,8 @@ public class AddItemFragment extends Fragment {
         buttonAdd.setOnClickListener(v -> addArtifact());
         // Cancel Button
         buttonCancel.setOnClickListener(v -> navigateBackToList());
+        // Set the click listener for the navigation icon (cross/close button)
+        toolbar.setNavigationOnClickListener(v -> navigateBackToList());
 
 
         return view;
