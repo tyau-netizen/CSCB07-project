@@ -25,8 +25,11 @@ import com.example.b07demosummer2024.model.Material;
 import com.example.b07demosummer2024.model.DynastyPeriod;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -122,6 +125,20 @@ public class EditArtifactFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (currentArtifact == null) {
+            Bundle args = getArguments();
+            if (args != null && args.containsKey("ARTIFACT_NO")) {
+                String lotNumber = args.getString("ARTIFACT_NO");
+                fetchArtifactFromFirebase(lotNumber);
+            } else {
+                Toast.makeText(requireContext(), "No artifact data provided.", Toast.LENGTH_SHORT).show();
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        } else {
+            // Artifact was passed via constructor – pre‑fill the form
+            populateFields();
+        }
 
         // Initiate UI
         MaterialToolbar toolbar = view.findViewById(R.id.toolbar_edit_artifact);
@@ -300,4 +317,39 @@ public class EditArtifactFragment extends Fragment {
         }
         return null;
     }
+
+    /**
+     * Fetches an artifact from Firebase Realtime Database using its lot number.
+     * If the artifact exists, it populates the form fields. If not, it shows
+     * a toast and navigates back to the previous screen.
+     *
+     * @param lotNumber The unique lot number of the artifact to fetch
+     */
+    private void fetchArtifactFromFirebase(String lotNumber) {
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReference("artifacts")
+                .child(lotNumber);
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArtifactItem item = snapshot.getValue(ArtifactItem.class);
+                if (item != null) {
+                    currentArtifact = item;
+//                    populateFields();
+                } else {
+                    Toast.makeText(requireContext(), "Artifact not found.", Toast.LENGTH_SHORT).show();
+                    requireActivity().getSupportFragmentManager().popBackStack();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(requireContext(), "Failed to load artifact: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                requireActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+    }
+
+
 }
