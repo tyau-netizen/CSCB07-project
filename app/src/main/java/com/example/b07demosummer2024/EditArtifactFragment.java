@@ -336,7 +336,7 @@ public class EditArtifactFragment extends Fragment {
                 ArtifactItem item = snapshot.getValue(ArtifactItem.class);
                 if (item != null) {
                     currentArtifact = item;
-//                    populateFields();
+                    populateFields();
                 } else {
                     Toast.makeText(requireContext(), "Artifact not found.", Toast.LENGTH_SHORT).show();
                     requireActivity().getSupportFragmentManager().popBackStack();
@@ -351,5 +351,48 @@ public class EditArtifactFragment extends Fragment {
         });
     }
 
+    /**
+     * Populates all UI fields with data from the currentArtifact object.
+     * Loads the artifact image using Glide, fills all TextInputEditText fields,
+     * and selects the matching options in the Category, Material, and Dynasty spinners.
+     * If currentArtifact is null, this method does nothing.
+     */
+    private void populateFields() {
+        if (currentArtifact == null) return;
 
+        // Load image
+        if (currentArtifact.getImageUri() != null && !currentArtifact.getImageUri().isEmpty()) {
+            Glide.with(this).load(currentArtifact.getImageUri()).into(ivImage);
+        }
+
+        // Fill text fields
+        tvLotNumber.setText(currentArtifact.getLotNumber());
+        etName.setText(currentArtifact.getName() != null ? currentArtifact.getName() : "");
+        etDescription.setText(currentArtifact.getDescription() != null ? currentArtifact.getDescription() : "");
+        etCulturalOrigin.setText(currentArtifact.getCulturalOrigin() != null ? currentArtifact.getCulturalOrigin() : "");
+        etDimensions.setText(currentArtifact.getDimensions() != null ? currentArtifact.getDimensions() : "");
+        etCondition.setText(currentArtifact.getConditionReport() != null ? currentArtifact.getConditionReport() : "");
+        etLocation.setText(currentArtifact.getCurrentLocation() != null ? currentArtifact.getCurrentLocation() : "");
+        etAcquisition.setText(currentArtifact.getAcquisitionMethod() != null ? currentArtifact.getAcquisitionMethod() : "");
+        etProvenance.setText(currentArtifact.getProvenance() != null ? currentArtifact.getProvenance() : "");
+        etAccession.setText(currentArtifact.getAccessionNumber() != null ? currentArtifact.getAccessionNumber() : "");
+        etNotes.setText(currentArtifact.getNotes() != null ? currentArtifact.getNotes() : "");
+
+        // Set spinner selections (using fromDisplayName helpers)
+        if (currentArtifact.getCategory() != null) {
+            String catDisplay = currentArtifact.getCategory().getDisplayName();
+            int pos = ((ArrayAdapter) spinnerCategory.getAdapter()).getPosition(catDisplay);
+            if (pos >= 0) spinnerCategory.setSelection(pos);
+        }
+        if (currentArtifact.getMaterial() != null) {
+            String matDisplay = currentArtifact.getMaterial().getDisplayName();
+            int pos = ((ArrayAdapter) spinnerMaterial.getAdapter()).getPosition(matDisplay);
+            if (pos >= 0) spinnerMaterial.setSelection(pos);
+        }
+        if (currentArtifact.getDynastyPeriod() != null) {
+            String dynDisplay = currentArtifact.getDynastyPeriod().getDisplayName();
+            int pos = ((ArrayAdapter) spinnerDynasty.getAdapter()).getPosition(dynDisplay);
+            if (pos >= 0) spinnerDynasty.setSelection(pos);
+        }
+    }
 }
