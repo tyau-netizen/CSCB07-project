@@ -138,5 +138,16 @@
             app:argType="boolean"
             android:defaultValue="true" />
     </fragment>
+    <fragment
+        android:id="@+id/accountMenuFragment"
+        android:name="com.example.b07demosummer2024.accountmenu.AccountMenuFragment"
+        android:label="fragment_account_menu"
+        tools:layout="@layout/fragment_account_menu" >
+        <action
+            android:id="@+id/action_accountMenuFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

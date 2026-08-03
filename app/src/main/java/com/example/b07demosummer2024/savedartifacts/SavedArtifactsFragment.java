@@ -24,8 +24,6 @@ import java.util.List;
 public class SavedArtifactsFragment extends BaseFragment<FragmentSavedArtifactsBinding,
         SavedArtifactsContract.View, SavedArtifactsContract.Presenter>
         implements SavedArtifactsContract.View {
-    private SessionManager sessionManager;
-    private RecyclerView recyclerView;
     private ArtifactItemAdapter adapter;
 
     public SavedArtifactsFragment() {}
@@ -56,7 +54,7 @@ public class SavedArtifactsFragment extends BaseFragment<FragmentSavedArtifactsB
     }
 
     private void initializeRecyclerView() {
-        recyclerView = binding.savedArtifactRecyclerView;
+        RecyclerView recyclerView = binding.savedArtifactRecyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         adapter = new ArtifactItemAdapter(new ArrayList<>(),

@@ -76,6 +76,7 @@ public final class SessionManager {
 
     public void endSession() {
         this.currentUser = null;
+        authRepository.signOut();
         if (listener != null) {
             listener.onSessionEnded();
         }
