@@ -14,6 +14,7 @@
         android:icon="@drawable/outline_build_24"
         android:title="Manage" />
     <item
+        android:id="@+id/accountMenuFragment"
         android:icon="@drawable/outline_account_circle_24"
         android:title="Account" />
 </menu>
