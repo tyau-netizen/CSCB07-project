@@ -202,7 +202,7 @@ public class ExpandedArtifactFragment extends Fragment {
                     Glide.with(requireContext()).load(item.getImageUri()).centerCrop().into(artifactImage);
                 }
 
-                // HTML Formattin'
+                // HTML Formatting
                 StringBuilder fullDescription = new StringBuilder();
                 if (item.getLotNumber() != null && !item.getLotNumber().trim().isEmpty()) {
                     fullDescription.append("<b>LOT NUMBER:</b> <font color='#7A7A7A'>").append(item.getLotNumber()).append("</font><br><br>");
