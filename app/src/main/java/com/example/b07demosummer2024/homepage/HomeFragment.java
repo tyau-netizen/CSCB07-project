@@ -206,12 +206,18 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding,
             if (currentPage > 1) {
                 currentPage--;
                 applyFilters();
+                if (binding != null && binding.recyclerView != null) {
+                    binding.recyclerView.scrollToPosition(0);
+                }
             }
         });
 
         btnNext.setOnClickListener(v -> {
             currentPage++;
             applyFilters();
+            if (binding != null && binding.recyclerView != null) {
+                binding.recyclerView.scrollToPosition(0);
+            }
         });
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(),

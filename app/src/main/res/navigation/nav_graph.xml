@@ -70,14 +70,10 @@
         tools:layout="@layout/fragment_manage_items">
         <action
             android:id="@+id/action_manageItemsFragment_to_addItemFragment"
-            app:destination="@id/addItemFragment"
-            app:popUpTo="@id/manageItemsFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/addItemFragment" />
         <action
             android:id="@+id/action_manageItemsFragment_to_deleteItemFragment"
-            app:destination="@id/deleteItemFragment"
-            app:popUpTo="@id/manageItemsFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/deleteItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/expandedArtifactFragment"
