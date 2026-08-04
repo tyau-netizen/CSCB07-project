@@ -322,6 +322,13 @@ public class ExpandedArtifactFragment extends Fragment {
                         dynastyText.setText("Dynasty Unknown");
                     }
 
+                    artifactCard.setOnClickListener(v -> {
+                        Bundle args = new Bundle();
+                        args.putString("ARTIFACT_NO", item.getLotNumber());
+                        Navigation.findNavController(requireView())
+                                .navigate(R.id.action_expandedArtifactFragment_self, args);
+                    });
+
                     relatedContainer.addView(artifactCard);
                 }
 

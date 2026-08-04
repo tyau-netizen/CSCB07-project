@@ -18,6 +18,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.graphics.Typeface;
+import android.widget.EditText;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.b07demosummer2024.R;
 import com.example.b07demosummer2024.base.BaseFragment;
@@ -129,6 +132,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding,
         btnNext = view.findViewById(R.id.btnNext);
         textPageIndicator = view.findViewById(R.id.textPageIndicator);
         searchView = view.findViewById(R.id.searchView);
+        EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        if (searchEditText != null) {
+            Typeface searchFont = ResourcesCompat.getFont(requireContext(), R.font.roboto_condensed_regular);
+            searchEditText.setTypeface(searchFont);
+        }
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

@@ -4,25 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
+    android:background="#FFFFFF"
+    android:padding="12dp"
     tools:context=".homepage.HomeFragment">
+
+    <ImageView
+        android:id="@+id/home_logo_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher_foreground"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintTop_toTopOf="@id/searchView"
+        app:layout_constraintBottom_toBottomOf="@id/searchView"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@android:drawable/edit_text"
         android:queryHint="Search artifacts..."
         app:iconifiedByDefault="false"
         app:layout_constraintBottom_toTopOf="@+id/filterContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/home_logo_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/filterContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
@@ -43,11 +57,21 @@
             android:layout_weight="1" />
     </LinearLayout>
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginBottom="8dp"
+        android:background="#B09867"
+        app:layout_constraintTop_toBottomOf="@id/filterContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/filterContainer"
         app:layout_constraintBottom_toTopOf="@id/paginationControls"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,23 +91,35 @@
 
         <Button
             android:id="@+id/btnPrevious"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prev" />
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="PREV"
+            android:textAllCaps="true"
+            android:textColor="#B09867"
+            app:strokeColor="#B09867" />
 
         <TextView
             android:id="@+id/textPageIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
+            android:fontFamily="@font/roboto_condensed_regular"
             android:text="Page 1 of 1"
+            android:textColor="#222222"
             android:textSize="14sp" />
 
         <Button
             android:id="@+id/btnNext"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next" />
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="NEXT"
+            android:textAllCaps="true"
+            android:textColor="#B09867"
+            app:strokeColor="#B09867" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

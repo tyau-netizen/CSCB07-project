@@ -21,17 +21,11 @@ public class ManageItemsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_manage_items, container, false);
 
         Button buttonAddItem = view.findViewById(R.id.buttonAddItem);
-        Button buttonDeleteItem = view.findViewById(R.id.buttonDeleteItem);
         Button buttonBack = view.findViewById(R.id.buttonBack);
 
         buttonAddItem.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireView());
             navController.navigate(R.id.action_manageItemsFragment_to_addItemFragment);
-        });
-
-        buttonDeleteItem.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(requireView());
-            navController.navigate(R.id.action_manageItemsFragment_to_deleteItemFragment);
         });
 
         buttonBack.setOnClickListener(v -> {

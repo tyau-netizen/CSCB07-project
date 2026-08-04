@@ -5,27 +5,63 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="#FFFFFF"
     android:padding="32dp"
     tools:context=".misc.ManageItemsFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:text="MANAGE ARTIFACTS"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:textColor="#222222"
+        android:textSize="24sp" />
+
+    <View
+        android:layout_width="60dp"
+        android:layout_height="2dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:background="#B09867" />
 
     <Button
         android:id="@+id/buttonAddItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#B09867"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:letterSpacing="0.05"
         android:text="@string/add_item"
-        android:layout_marginBottom="16dp" />
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/buttonDeleteItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#D32F2F"
+        android:fontFamily="@font/roboto_condensed_bold"
+        android:letterSpacing="0.05"
         android:text="@string/delete_item"
-        android:layout_marginBottom="16dp" />
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/buttonBack"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/back" />
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_condensed_regular"
+        android:text="@string/back"
+        android:textColor="#7A7A7A"
+        android:textSize="14sp" />
 
 </LinearLayout>
