@@ -29,11 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private NavController navController;
-    private final SessionManager sessionManager = SessionManager.getInstance();
+    private BottomNavManager bottomNavManager;
     FirebaseDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Enable edge-to-edge drawing to account for device elements
+        EdgeToEdge.enable(this);
+
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -45,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
         if (navHostFragment != null) {
             navController = navHostFragment.getNavController();
 
-            setupBottomNavMenu();
+            bottomNavManager = new BottomNavManager(binding.bottomNavigation, navController);
+            setupWindowInsets();
         }
 
         db = FirebaseDatabase.getInstance("https://b07-demo-summer-2024-default-rtdb.firebaseio.com/");
@@ -54,48 +58,33 @@ public class MainActivity extends AppCompatActivity {
         myRef.child("movies").setValue("B07 Demo!");
     }
 
-    private void setupBottomNavMenu() {
-        // Set up navigation on menu item click
-        binding.bottomNavigation.setOnItemSelectedListener(item -> {
-            int destinationId = item.getItemId();
+    private void setupWindowInsets() {
+        // Apply window insets to account for device elements
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(),
+                (v, windowInsets) -> {
+                    // System bars e.g. top status bar, navigation buttons
+                    Insets systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+                    // On-screen keyboard
+                    Insets ime = windowInsets.getInsets(WindowInsetsCompat.Type.ime());
 
-            // Do nothing if attempting to navigate to current fragment
-            if (navController.getCurrentDestination() != null
-                    && navController.getCurrentDestination().getId() == destinationId) {
-                return true;
-            }
+                    // Hide bottom nav menu if keyboard is on screen
+                    boolean keyboardIsVisible =
+                            ime.bottom > 0
+                            && windowInsets.isVisible(WindowInsetsCompat.Type.ime());
+                    bottomNavManager.updateKeyboardStatus(keyboardIsVisible);
 
-            NavOptions navOptions = new NavOptions.Builder()
-                    .setLaunchSingleTop(true)
-                    .setPopUpTo(R.id.homeFragment, false)
-                    .build();
+                    v.setPadding(
+                            systemBars.left,
+                            systemBars.top,
+                            systemBars.right,
+                            ime.bottom
+                    );
 
-            navController.navigate(destinationId, null, navOptions);
-            return true;
-        });
-
-        navController.addOnDestinationChangedListener(
-                (controller,destination, arguments) -> {
-            // Check if nav menu should be shown in current fragment
-            boolean shouldHide = arguments != null
-                    && arguments.getBoolean("hideBottomNav", false);
-            binding.bottomNavigation.setVisibility(shouldHide ? View.GONE : View.VISIBLE);
-
-            // Show manage artifacts button if user is admin
-            boolean isAdmin = sessionManager.isAdminSession();
-            MenuItem manageArtifactsButton = binding.bottomNavigation.getMenu()
-                    .findItem(R.id.manageItemsFragment);
-            if (manageArtifactsButton != null) {
-                manageArtifactsButton.setVisible(isAdmin);
-            }
-
-            // Keep button state synced with current screen
-            MenuItem menuItem = binding.bottomNavigation.getMenu().findItem(destination.getId());
-            if (menuItem != null) {
-                menuItem.setChecked(true);
-            }
-        });
+                    return windowInsets;
+                });
     }
+
+
     @Override
     public boolean onSupportNavigateUp() {
         return navController != null && navController.navigateUp() || super.onSupportNavigateUp();
