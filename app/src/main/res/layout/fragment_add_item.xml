@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:padding="16dp"
     tools:context=".AddItemFragment">
 
@@ -16,9 +17,12 @@
             android:id="@+id/toolbar_add_artifact"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
-            android:background="#F5F5F5"
+            android:background="#FFFFFF"
+            android:elevation="2dp"
             app:title="Add Artifact"
+            app:titleTextColor="#222222"
             app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
+            app:navigationIconTint="#B09867"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -28,9 +32,12 @@
             android:id="@+id/textViewLotNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Lot Number *"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"
+            android:text="LOT NUMBER *"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/toolbar_add_artifact"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -39,7 +46,10 @@
             android:id="@+id/layoutLotNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:hint="e.g., LOT001"
+            app:hintTextColor="#B09867"
+            app:boxStrokeColor="#B09867"
             app:layout_constraintTop_toBottomOf="@+id/textViewLotNumber"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -48,6 +58,8 @@
                 android:id="@+id/editTextLotNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:textColor="#222222"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,9 +67,12 @@
             android:id="@+id/textViewName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Name *"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="NAME *"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutLotNumber"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -66,7 +81,10 @@
             android:id="@+id/layoutName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:hint="Artifact name"
+            app:hintTextColor="#B09867"
+            app:boxStrokeColor="#B09867"
             app:layout_constraintTop_toBottomOf="@+id/textViewName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -75,6 +93,8 @@
                 android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:textColor="#222222"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,9 +102,12 @@
             android:id="@+id/textViewDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Description *"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="DESCRIPTION *"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -93,7 +116,10 @@
             android:id="@+id/layoutDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:hint="Description"
+            app:hintTextColor="#B09867"
+            app:boxStrokeColor="#B09867"
             app:layout_constraintTop_toBottomOf="@+id/textViewDescription"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -102,6 +128,8 @@
                 android:id="@+id/editTextDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:textColor="#222222"
                 android:inputType="textMultiLine"
                 android:minLines="3" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -110,9 +138,12 @@
             android:id="@+id/textViewCategory"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Category *"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="CATEGORY *"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutDescription"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -129,10 +160,13 @@
         <TextView
             android:id="@+id/textViewMaterial"
             android:layout_width="0dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:layout_height="wrap_content"
-            android:text="Material *"
-            android:textStyle="bold"
+            android:text="MATERIAL *"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
@@ -150,9 +184,12 @@
             android:id="@+id/textViewDynasty"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Dynasty Period *"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="DYNASTY PERIOD *"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/spinnerMaterial"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -171,9 +208,12 @@
             android:id="@+id/textViewCulturalOrigin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Cultural Origin"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="CULTURAL ORIGIN"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/spinnerDynasty"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -182,8 +222,11 @@
             android:id="@+id/layoutCulturalOrigin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
             android:hint="e.g., Ancient China"
+            app:hintTextColor="#B09867"
+            app:boxStrokeColor="#B09867"
             app:layout_constraintTop_toBottomOf="@+id/textViewCulturalOrigin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -192,6 +235,8 @@
                 android:id="@+id/editTextCulturalOrigin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:textColor="#222222"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -199,9 +244,12 @@
             android:id="@+id/textViewDimensions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Dimensions"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="DIMENSIONS"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutCulturalOrigin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -211,7 +259,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="e.g., 15cm x 10cm x 5cm"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
+            app:hintTextColor="#B09867"
+            app:boxStrokeColor="#B09867"
             app:layout_constraintTop_toBottomOf="@+id/textViewDimensions"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -220,6 +271,8 @@
                 android:id="@+id/editTextDimensions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:textColor="#222222"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -227,10 +280,12 @@
             android:id="@+id/textViewConditionReport"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Condition Report"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="8dp"
+            android:text="CONDITION REPORT"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutDimensions"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -239,7 +294,10 @@
             android:id="@+id/layoutConditionReport"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:hint="e.g., Intact, minor wear"
+            app:hintTextColor="#B09867"
+            app:boxStrokeColor="#B09867"
             app:layout_constraintTop_toBottomOf="@+id/textViewConditionReport"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -248,6 +306,8 @@
                 android:id="@+id/editTextConditionReport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:textColor="#222222"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -255,9 +315,12 @@
             android:id="@+id/textViewCurrentLocation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Current Location"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="CURRENT LOCATION"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutConditionReport"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -267,7 +330,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="e.g., Museum of Fine Arts"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
+            app:hintTextColor="#B09867"
+            app:boxStrokeColor="#B09867"
             app:layout_constraintTop_toBottomOf="@+id/textViewCurrentLocation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -276,6 +342,8 @@
                 android:id="@+id/editTextCurrentLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:textColor="#222222"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -284,9 +352,12 @@
             android:id="@+id/textViewAcquisitionMethod"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Acquisition Method"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="ACQUISITION METHOD"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutCurrentLocation"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -295,7 +366,10 @@
             android:id="@+id/layoutAcquisitionMethod"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:hint="e.g., Donation, Purchase"
+            app:hintTextColor="#B09867"
+            app:boxStrokeColor="#B09867"
             app:layout_constraintTop_toBottomOf="@+id/textViewAcquisitionMethod"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -304,6 +378,8 @@
                 android:id="@+id/editTextAcquisitionMethod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:textColor="#222222"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -311,9 +387,12 @@
             android:id="@+id/textViewProvenance"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Provenance"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="PROVENANCE"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutAcquisitionMethod"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -322,7 +401,10 @@
             android:id="@+id/layoutProvenance"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:hint="e.g., Excavated in 1990"
+            app:hintTextColor="#B09867"
+            app:boxStrokeColor="#B09867"
             app:layout_constraintTop_toBottomOf="@+id/textViewProvenance"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -331,6 +413,8 @@
                 android:id="@+id/editTextProvenance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:textColor="#222222"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -338,9 +422,12 @@
             android:id="@+id/textViewAccessionNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Accession Number"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="ACCESSION NUMBER"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutProvenance"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -349,7 +436,10 @@
             android:id="@+id/layoutAccessionNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:hint="e.g., ACC-2024-001"
+            app:hintTextColor="#B09867"
+            app:boxStrokeColor="#B09867"
             app:layout_constraintTop_toBottomOf="@+id/textViewAccessionNumber"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -358,6 +448,8 @@
                 android:id="@+id/editTextAccessionNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:textColor="#222222"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -366,9 +458,12 @@
             android:id="@+id/textViewNotes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Notes"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="NOTES"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutAccessionNumber"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -377,7 +472,10 @@
             android:id="@+id/layoutNotes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:hint="Additional notes"
+            app:hintTextColor="#B09867"
+            app:boxStrokeColor="#B09867"
             app:layout_constraintTop_toBottomOf="@+id/textViewNotes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -386,6 +484,8 @@
                 android:id="@+id/editTextNotes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:textColor="#222222"
                 android:inputType="textMultiLine"
                 android:minLines="3" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -395,9 +495,12 @@
             android:id="@+id/textViewImagePicker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Artifact Image"
-            android:textStyle="bold"
-            android:layout_marginTop="12dp"
+            android:text="ARTIFACT IMAGE"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textColor="#B09867"
+            android:textSize="12sp"
+            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutNotes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -409,7 +512,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/placeholder_image"
             android:background="#E0E0E0"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/textViewImagePicker"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -420,6 +523,9 @@
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:text="Pick Image"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:textColor="#B09867"
+            app:strokeColor="#B09867"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/artifactImageView"
             app:layout_constraintStart_toStartOf="parent"
@@ -430,8 +536,13 @@
         <Button
             android:id="@+id/buttonAdd"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Add Artifact"
+            android:layout_height="56dp"
+            android:text="ADD ARTIFACT"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:letterSpacing="0.05"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp"
             android:backgroundTint="#B09867"
@@ -446,6 +557,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Cancel"
+            android:fontFamily="@font/roboto_condensed_regular"
             android:layout_marginBottom="32dp"
             android:textColor="#808080"
             app:layout_constraintTop_toBottomOf="@+id/buttonAdd"

@@ -71,4 +71,10 @@ public class AccountMenuFragment extends BaseFragment<FragmentAccountMenuBinding
         Navigation.findNavController(requireView()).navigate(
                 R.id.action_accountMenuFragment_to_loginFragment);
     }
+
+    @Override
+    public void navigateToLearnAboutUs() {
+        Navigation.findNavController(requireView()).navigate(
+                R.id.action_accountMenuFragment_to_learnAboutUsFragment);
+    }
 }

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    android:fillViewport="true"
+    tools:context=".LearnAboutUsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="40dp">
+
+        <!-- HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="ABOUT TAAM"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:textColor="#222222"
+                android:textSize="28sp" />
+
+            <View
+                android:layout_width="60dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="12dp"
+                android:background="#B09867" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp">
+
+            <!-- VISION -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="@string/toronto_asian_art_museum_vision"
+                android:textAllCaps="true"
+                android:textColor="#B09867"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/the_toronto_asian_art_museum_taam_envisions_becoming_a_vibrant_community_hub_where_people_of_all_backgrounds_can_engage_with_the_richness_and_diversity_of_asian_art_culture_and_history_we_strive_to_foster_understanding_appreciation_and_dialogue_through_accessible_exhibitions_educational_programs_and_hands_on_experiences_rooted_in_heritage_n_nour_goal_is_to_grow_thoughtfully_preserving_meaningful_traditions_while_embracing_innovation_so_that_future_generations_can_explore_and_celebrate_asian_culture_in_a_welcoming_inclusive_and_community_driven_space"
+                android:textColor="#7A7A7A"
+                android:textSize="15sp" />
+
+            <!-- MISSION -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="@string/toronto_asian_art_museum_mission"
+                android:textAllCaps="true"
+                android:textColor="#B09867"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/the_toronto_asian_art_museum_taam_is_dedicated_to_preserving_celebrating_and_sharing_the_rich_artistic_and_cultural_heritage_of_asia_our_mission_is_to_foster_intercultural_understanding_inspire_curiosity_and_build_inclusive_communities_through_the_exhibition_interpretation_and_research_of_asian_art_and_artifacts_n_nwe_are_committed_to_making_art_accessible_to_all_by_offering_dynamic_programs_traveling_exhibitions_and_educational_initiatives_that_engage_diverse_audiences_from_students_to_seniors_newcomers_to_long_time_residents_through_our_growing_collection_community_partnerships_and_public_engagement_we_aim_to_serve_as_a_vibrant_cultural_bridge_that_connects_past_traditions_with_present_and_future_generations"
+                android:textColor="#7A7A7A"
+                android:textSize="15sp" />
+
+            <!-- HISTORY -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="@string/toronto_asian_art_museum_history"
+                android:textAllCaps="true"
+                android:textColor="#B09867"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/the_toronto_asian_art_museum_taam_was_founded_in_2019_with_a_passionate_vision_to_preserve_and_share_the_richness_of_asian_heritage_with_communities_across_the_greater_toronto_area_what_began_as_a_small_volunteer_led_initiative_has_steadily_grown_into_a_charitable_organization_dedicated_to_cultural_education_community_engagement_and_artifact_preservation_n_ntaam_was_established_in_response_to_a_recognized_gap_in_the_representation_of_asian_art_and_cultural_narratives_in_local_museums_with_the_generous_support_of_community_members_and_local_partners_taam_has_built_a_growing_collection_of_over_2_000_artifacts_spanning_thousands_of_years_of_history_from_across_east_south_and_southeast_asia_n_nthe_museum_has_reached_beyond_its_gallery_walls_through_traveling_exhibitions_in_schools_libraries_and_community_centers_bringing_asian_art_and_storytelling_directly_into_the_spaces_where_people_live_and_learn_taam_has_also_introduced_interactive_programming_such_as_traditional_craft_workshops_cultural_lectures_and_heritage_festivals_engaging_audiences_of_all_ages_n_nas_taam_continues_to_evolve_it_remains_committed_to_fostering_intercultural_dialogue_supporting_youth_and_seniors_through_arts_education_and_creating_inclusive_opportunities_for_communities_to_connect_with_the_past_and_shape_the_future_together"
+                android:textColor="#7A7A7A"
+                android:textSize="15sp" />
+
+            <!-- EDUCATION AND RESEARCH -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="EDUCATION AND RESEARCH"
+                android:textAllCaps="true"
+                android:textColor="#B09867"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:lineSpacingExtra="4dp"
+                android:text="At the Toronto Asian Art Museum (TAAM), education and research are at the heart of our mission. We believe that meaningful engagement with art and heritage begins with learning—both formal and informal, academic and community-based.\n\nEducation\nTAAM offers a wide range of educational programs designed to inspire curiosity and cultural understanding across generations. From school-based traveling exhibitions to hands-on workshops in calligraphy, Chinese knotting, and traditional painting, our programs bring Asian history and art to life in accessible and interactive ways. We work closely with educators, community organizations, and cultural practitioners to ensure that our initiatives meet the diverse needs of newcomers, youth, and seniors alike.\n\nOur youth mentorship programs introduce students to museum practices, including artifact handling, exhibition planning, and curatorial storytelling. Seniors also play a vital role as knowledge holders, sharing lived experiences and traditional skills in intergenerational settings.\n\nResearch\nTAAM is committed to building a thoughtful, community-informed understanding of Asian material culture. We support ongoing research into the provenance, history, and cultural significance of the artifacts in our collection. Our focus includes oral history gathering, artifact documentation, and collaborative projects with scholars, artists, and cultural institutions.\n\nAs we grow, TAAM aims to publish research findings, develop bilingual interpretive resources, and expand our digital collection management system—making our knowledge more accessible to the public and contributing to the broader discourse on Asian art in Canada."
+                android:textColor="#7A7A7A"
+                android:textSize="15sp" />
+
+            <!-- OUR MUSEUM -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="OUR MUSEUM"
+                android:textAllCaps="true"
+                android:textColor="#B09867"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:lineSpacingExtra="4dp"
+                android:text="Welcome to our museum\n\nWe are open to public now, looking forward to your visiting...\n\nMuseums are examples of informal learning environments, which means they are devoted primarily to informal education — a lifelong process whereby individuals acquire attitudes, values, skills, and knowledge from daily experience and the educative influences and resources in his or her environment. Even outside of museums, informal learning plays a pivotal role in how we take in the world around us. A single visit to a museum can expose visitors to in-depth information on a subject, and the nature of the museum environment is one in which you can spend as much or as little time as you like exploring exhibits. The environment allows you to form your own unique experiences and take away information that interests you.\n\nMany museums are nonprofit entities with missions to educate and inspire audiences – and that means that they need the support of visitors, members, and donors in order to keep on fulfilling those missions. Sadly, many people don't even know that museums are nonprofit organizations! If you like a cultural organization and you want to keep it around for decades to come, make a donation or fill out that membership card with pride! In many ways, supporting a museum through visitation or – even better – through membership or philanthropic support is a way of strengthening communities and giving back so that the museum can create impactful programs that fulfill its mission.\n\nWe are located at 255 Consumers Rd, Unit 230, North York, ON."
+                android:textColor="#7A7A7A"
+                android:textSize="15sp" />
+
+            <!-- UPCOMING EVENTS LINK -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="#F9F6F0"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:text="UPCOMING EVENTS"
+                    android:textAllCaps="true"
+                    android:textAlignment="center"
+                    android:textColor="#222222"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="14dp"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:text="See what's happening at TAAM — seminars, workshops, and more."
+                    android:textAlignment="center"
+                    android:textColor="#7A7A7A"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/buttonViewEvents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:fontFamily="@font/roboto_condensed_bold"
+                    android:letterSpacing="0.05"
+                    android:text="VIEW EVENTS ON OUR WEBSITE"
+                    android:textAllCaps="true"
+                    android:textColor="#B09867"
+                    android:textSize="13sp"
+                    app:strokeColor="#B09867" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- CONTACT / WORK WITH US SECTION -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:background="#F9F6F0"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="CONTACT US"
+                android:textAllCaps="true"
+                android:textAlignment="center"
+                android:textColor="#222222"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:text="WANT TO WORK WITH US OR DONATE AN ARTIFACT?"
+                android:textAlignment="center"
+                android:textColor="#7A7A7A"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="60dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="#B09867" />
+
+            <!-- ADDRESS ROW -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@android:drawable/ic_menu_mylocation"
+                    app:tint="#B09867" />
+
+                <TextView
+                    android:id="@+id/textContactAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:text="255 Consumers Road Toronto, Ontario Canada M2J 4R3"
+                    android:textColor="#222222"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- PHONE ROW -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@android:drawable/ic_menu_call"
+                    app:tint="#B09867" />
+
+                <TextView
+                    android:id="@+id/textContactPhone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:text="+1(647) 946-7698"
+                    android:textColor="#222222"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- EMAIL ROW -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@android:drawable/ic_dialog_email"
+                    app:tint="#B09867" />
+
+                <TextView
+                    android:id="@+id/textContactEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:text="info@taam.ca"
+                    android:textColor="#B09867"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

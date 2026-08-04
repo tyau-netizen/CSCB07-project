@@ -10,9 +10,12 @@
         android:id="@+id/toolbar_edit_artifact"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#F5F5F5"
+        android:background="#FFFFFF"
+        android:elevation="2dp"
         app:title="Edit Artifact"
-        app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel" />
+        app:titleTextColor="#222222"
+        app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
+        app:navigationIconTint="#B09867" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,62 +43,97 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="24dp"
-                android:text="Change Image" />
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:text="Change Image"
+                android:textColor="#B09867"
+                app:strokeColor="#B09867" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lot Number"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="LOT NUMBER"
+                android:textAllCaps="true"
                 android:textSize="12sp"
-                android:textColor="#888888" />
+                android:textColor="#B09867" />
 
             <TextView
                 android:id="@+id/tv_edit_lot_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:fontFamily="@font/roboto_condensed_bold"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textColor="#222222" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Artifact Name">
+                android:hint="Artifact Name"
+                app:hintTextColor="#B09867"
+                app:boxStrokeColor="#B09867">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:textColor="#222222" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Description">
+                android:hint="Description"
+                app:hintTextColor="#B09867"
+                app:boxStrokeColor="#B09867">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:textColor="#222222"
                     android:inputType="textMultiLine"
                     android:minLines="3" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Category"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="CATEGORY"
+                android:textAllCaps="true"
+                android:textSize="12sp"
+                android:textColor="#B09867" />
             <Spinner
                 android:id="@+id/spinner_edit_category"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="12dp"/>
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Material"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="MATERIAL"
+                android:textAllCaps="true"
+                android:textSize="12sp"
+                android:textColor="#B09867" />
             <Spinner
                 android:id="@+id/spinner_edit_material"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginBottom="12dp"/>
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dynasty/Period"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:text="DYNASTY/PERIOD"
+                android:textAllCaps="true"
+                android:textSize="12sp"
+                android:textColor="#B09867" />
             <Spinner
                 android:id="@+id/spinner_edit_dynasty"
                 android:layout_width="match_parent"
@@ -106,88 +144,120 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Cultural Origin">
+                android:hint="Cultural Origin"
+                app:hintTextColor="#B09867"
+                app:boxStrokeColor="#B09867">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_cultural_origin"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:textColor="#222222" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Dimensions">
+                android:hint="Dimensions"
+                app:hintTextColor="#B09867"
+                app:boxStrokeColor="#B09867">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_dimensions"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:textColor="#222222" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Condition Report">
+                android:hint="Condition Report"
+                app:hintTextColor="#B09867"
+                app:boxStrokeColor="#B09867">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_condition"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:textColor="#222222" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Current Location">
+                android:hint="Current Location"
+                app:hintTextColor="#B09867"
+                app:boxStrokeColor="#B09867">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_location"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:textColor="#222222" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Acquisition Method">
+                android:hint="Acquisition Method"
+                app:hintTextColor="#B09867"
+                app:boxStrokeColor="#B09867">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_acquisition"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:textColor="#222222" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Provenance">
+                android:hint="Provenance"
+                app:hintTextColor="#B09867"
+                app:boxStrokeColor="#B09867">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_provenance"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:textColor="#222222" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Accession Number">
+                android:hint="Accession Number"
+                app:hintTextColor="#B09867"
+                app:boxStrokeColor="#B09867">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_accession"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:textColor="#222222" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Notes">
+                android:hint="Notes"
+                app:hintTextColor="#B09867"
+                app:boxStrokeColor="#B09867">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_notes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:textColor="#222222"
                     android:inputType="textMultiLine"
                     android:minLines="3" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -197,7 +267,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
-                android:text="Save Changes"
+                android:backgroundTint="#B09867"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:letterSpacing="0.05"
+                android:text="SAVE CHANGES"
+                android:textAllCaps="true"
+                android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
         </LinearLayout>

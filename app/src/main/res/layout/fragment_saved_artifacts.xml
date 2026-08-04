@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".savedartifacts.SavedArtifactsFragment">
 
     <LinearLayout
@@ -20,9 +21,18 @@
             android:id="@+id/saved_artifact_title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="YOUR SAVED ARTIFACTS"
+            android:textAllCaps="true"
+            android:textColor="#222222"
+            android:textSize="28sp" />
+
+        <View
+            android:layout_width="60dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="16dp"
-            android:text="Your Saved Artifacts"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:background="#B09867" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/saved_artifact_recycler_view"

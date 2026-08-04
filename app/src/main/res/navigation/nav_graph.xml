@@ -83,10 +83,13 @@
         <action
             android:id="@+id/action_expandedArtifactFragment_to_editArtifactFragment"
             app:destination="@id/editArtifactFragment" />
+        <action
+            android:id="@+id/action_expandedArtifactFragment_self"
+            app:destination="@id/expandedArtifactFragment" />
         <argument
             android:name="hideBottomNav"
             app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="false" />
         <action
             android:id="@+id/action_expandedArtifactFragment_to_recyclerViewFragment"
             app:destination="@id/homeFragment"
@@ -121,7 +124,7 @@
         <argument
             android:name="hideBottomNav"
             app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="false" />
     </fragment>
 
     <fragment
@@ -132,7 +135,7 @@
         <argument
             android:name="hideBottomNav"
             app:argType="boolean"
-            android:defaultValue="true" />
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/accountMenuFragment"
@@ -144,6 +147,14 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_accountMenuFragment_to_learnAboutUsFragment"
+            app:destination="@id/learnAboutUsFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/learnAboutUsFragment"
+        android:name="com.example.b07demosummer2024.LearnAboutUsFragment"
+        android:label="fragment_learn_about_us"
+        tools:layout="@layout/fragment_learn_about_us" />
 </navigation>

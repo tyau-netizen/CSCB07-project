@@ -5,11 +5,19 @@ import com.example.b07demosummer2024.user.SessionManager;
 
 import java.util.List;
 
+/**
+ * Presenter for the account menu screen. Loads the list of menu items on
+ * view creation and handles what happens when each item is tapped -
+ * currently supports logging out and navigating to the Learn About Us page.
+ */
 public class AccountMenuPresenter extends BasePresenter<AccountMenuContract.View>
         implements AccountMenuContract.Presenter {
     private final SessionManager sessionManager;
     private final MenuRepository menuRepository;
 
+    /**
+     * Sets up the session manager and menu repository this presenter relies on.
+     */
     public AccountMenuPresenter() {
         this.sessionManager = SessionManager.getInstance();
         this.menuRepository = new MenuRepository();
@@ -30,6 +38,9 @@ public class AccountMenuPresenter extends BasePresenter<AccountMenuContract.View
         switch (item.getTitle()) {
             case "Log Out":
                 view.showLogoutConfirmationDialog();
+                break;
+            case "Learn About Us":
+                view.navigateToLearnAboutUs();
                 break;
         }
     }
