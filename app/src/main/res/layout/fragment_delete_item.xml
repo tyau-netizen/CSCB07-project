@@ -6,29 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".DeleteItemFragment">
 
-    <EditText
-        android:id="@+id/editTextTitle"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_delete_artifact"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Item Title"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#F5F5F5"
+        app:title="Delete Artifact"
+        app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinnerCategory"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTitle"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_delete_artifact"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <Button
-        android:id="@+id/buttonDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete Item"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCategory"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:id="@+id/textDeleteTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Delete Artifact by Title"
+            android:textColor="#222222"
+            android:textSize="22sp"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:gravity="center" />
+
+        <EditText
+            android:id="@+id/editTextTitle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:hint="Enter Artifact Title"
+            android:paddingHorizontal="16dp"
+            android:background="@android:drawable/editbox_background" />
+
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Delete Item"
+            android:backgroundTint="#D32F2F"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Cancel"
+            android:backgroundTint="#757575"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

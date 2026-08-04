@@ -37,13 +37,33 @@ public class DeleteItemFragment extends Fragment {
         spinnerCategory = view.findViewById(R.id.spinnerCategory);
         buttonDelete = view.findViewById(R.id.buttonDelete);
 
-        db = FirebaseDatabase.getInstance("https://console.firebase.google.com/project/taam-100/database/taam-100-default-rtdb/data/~2F");
+        db = FirebaseDatabase.getInstance("https://taam-100-default-rtdb.firebaseio.com/");
 
-        // Set up the spinner with categories
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.categories_array, android.R.layout.simple_spinner_item);
+        // Set up the spinner with real categories
+        com.example.b07demosummer2024.model.Category[] categories = com.example.b07demosummer2024.model.Category.values();
+        java.util.List<String> displayNames = new java.util.ArrayList<>();
+        for (com.example.b07demosummer2024.model.Category c : categories) {
+            displayNames.add(c.getDisplayName());
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, displayNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
+
+        com.google.android.material.appbar.MaterialToolbar toolbar = view.findViewById(R.id.toolbar_delete_artifact);
+        if (toolbar != null) {
+            toolbar.setNavigationOnClickListener(v -> {
+                androidx.navigation.Navigation.findNavController(requireView()).navigateUp();
+            });
+        }
+
+        Button buttonCancel = view.findViewById(R.id.buttonCancel);
+        if (buttonCancel != null) {
+            buttonCancel.setOnClickListener(v -> {
+                androidx.navigation.Navigation.findNavController(requireView()).navigateUp();
+            });
+        }
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,35 +77,35 @@ public class DeleteItemFragment extends Fragment {
 
     private void deleteItemByTitle() {
         String title = editTextTitle.getText().toString().trim();
-        String category = spinnerCategory.getSelectedItem().toString().toLowerCase();
 
         if (title.isEmpty()) {
             Toast.makeText(getContext(), "Please enter item title", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        itemsRef = db.getReference("categories/" + category);
+        itemsRef = db.getReference("artifacts");
         itemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                boolean itemFound = false;
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    ArtifactItem item = snapshot.getValue(ArtifactItem.class);
-//                    if (item != null && item.getTitle().equalsIgnoreCase(title)) {
-//                        snapshot.getRef().removeValue().addOnCompleteListener(task -> {
-//                            if (task.isSuccessful()) {
-//                                Toast.makeText(getContext(), "Item deleted", Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                Toast.makeText(getContext(), "Failed to delete item", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                        itemFound = true;
-//                        break;
-//                    }
-//                }
-//                if (!itemFound) {
-//                    Toast.makeText(getContext(), "Item not found", Toast.LENGTH_SHORT).show();
-//                }
+                boolean itemFound = false;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    ArtifactItem item = snapshot.getValue(ArtifactItem.class);
+                    if (item != null && item.getName() != null && item.getName().equalsIgnoreCase(title)) {
+                        snapshot.getRef().removeValue().addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getContext(), "Artifact deleted successfully", Toast.LENGTH_SHORT).show();
+                                androidx.navigation.Navigation.findNavController(requireView()).navigateUp();
+                            } else {
+                                Toast.makeText(getContext(), "Failed to delete item", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        itemFound = true;
+                        break;
+                    }
+                }
+                if (!itemFound) {
+                    Toast.makeText(getContext(), "Artifact with title '" + title + "' not found", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -93,7 +113,5 @@ public class DeleteItemFragment extends Fragment {
                 Toast.makeText(getContext(), "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 }
