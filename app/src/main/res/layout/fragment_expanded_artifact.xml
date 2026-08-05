@@ -14,14 +14,12 @@
         android:orientation="vertical"
         android:paddingBottom="32dp">
 
-
-
         <ImageView
             android:id="@+id/image_artifact_large"
             android:layout_width="match_parent"
             android:layout_height="380dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_background"
+            tools:src="@drawable/ic_launcher_background"
             />
 
         <LinearLayout

@@ -199,7 +199,10 @@ public class ExpandedArtifactFragment extends Fragment {
                 }
 
                 if (item.getImageUri() != null && !item.getImageUri().trim().isEmpty()) {
-                    Glide.with(requireContext()).load(item.getImageUri()).centerCrop().into(artifactImage);
+                    Glide.with(requireContext())
+                            .load(item.getImageUri())
+                            .centerCrop()
+                            .into(artifactImage);
                 }
 
                 // HTML Formatting
