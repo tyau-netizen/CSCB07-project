@@ -1,5 +1,9 @@
 package com.example.b07demosummer2024;
 
+/**
+ * Handles deleting an artifact by searching its title in the Firebase Realtime Database.
+ */
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
