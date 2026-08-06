@@ -94,7 +94,11 @@ public class DeleteItemFragment extends Fragment {
                 boolean itemFound = false;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     ArtifactItem item = snapshot.getValue(ArtifactItem.class);
-                    if (item != null && item.getName() != null && item.getName().equalsIgnoreCase(title)) {
+                    boolean matchesName = (item != null && item.getName() != null && item.getName().equalsIgnoreCase(title));
+                    boolean matchesLot = (item != null && item.getLotNumber() != null && item.getLotNumber().equalsIgnoreCase(title));
+                    boolean matchesKey = (snapshot.getKey() != null && snapshot.getKey().equalsIgnoreCase(title));
+
+                    if (matchesName || matchesLot || matchesKey) {
                         snapshot.getRef().removeValue().addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getContext(), "Artifact deleted successfully", Toast.LENGTH_SHORT).show();
@@ -108,7 +112,7 @@ public class DeleteItemFragment extends Fragment {
                     }
                 }
                 if (!itemFound) {
-                    Toast.makeText(getContext(), "Artifact with title '" + title + "' not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Artifact '" + title + "' not found", Toast.LENGTH_SHORT).show();
                 }
             }
 
